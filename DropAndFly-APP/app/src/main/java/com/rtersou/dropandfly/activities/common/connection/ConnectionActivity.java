@@ -1,4 +1,4 @@
-package com.rtersou.dropandfly.connection;
+package com.rtersou.dropandfly.activities.common.connection;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.rtersou.dropandfly.R;
-import com.rtersou.dropandfly.registration.RegistrationActivity;
+import com.rtersou.dropandfly.activities.user.registration.RegistrationActivity;
 
 public class ConnectionActivity extends AppCompatActivity {
 
