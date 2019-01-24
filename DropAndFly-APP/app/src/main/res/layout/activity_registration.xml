@@ -3,98 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.common.connection.ConnectionActivity"
-    android:layout_margin="50dp"
-    android:orientation="vertical">
+    tools:context=".activities.user.registration.RegistrationActivity"
+    android:layout_margin="40dp"
+    android:orientation="vertical"
+    android:weightSum="12">
 
 
     <TextView
         android:id="@+id/reg_email_text"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
         android:text="@string/email"
-        android:textSize="25dp"/>
+        android:textSize="@dimen/font_size_medium"/>
 
     <EditText
         android:id="@+id/reg_email_edit"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/email"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="@string/email"
+        android:textSize="@dimen/font_size_small"/>
 
     <TextView
         android:id="@+id/reg_lastname_text"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:paddingTop="15dp"
         android:text="@string/lastname"
-        android:textSize="25dp"/>
+        android:textSize="@dimen/font_size_medium"/>
 
     <EditText
         android:id="@+id/reg_lastname_edit"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/lastname"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="@string/lastname"
+        android:textSize="@dimen/font_size_small"/>
 
     <TextView
         android:id="@+id/reg_firstname_text"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:paddingTop="15dp"
         android:text="@string/firstname"
-        android:textSize="25dp"/>
+        android:textSize="@dimen/font_size_medium"/>
 
     <EditText
         android:id="@+id/reg_firstname_edit"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/firstname"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="@string/firstname"
+        android:textSize="@dimen/font_size_small"/>
 
     <TextView
         android:id="@+id/reg_password_text"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:paddingTop="15dp"
         android:text="@string/password"
-        android:textSize="25dp"/>
+        android:textSize="@dimen/font_size_medium"/>
 
     <EditText
         android:id="@+id/reg_password_edit"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="************"
+        android:inputType="textPassword"
+        android:textSize="@dimen/font_size_small"/>
 
     <TextView
         android:id="@+id/reg_confirm_password_text"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:paddingTop="15dp"
         android:text="@string/confirm_pwd"
-        android:textSize="25dp"/>
+        android:textSize="@dimen/font_size_medium"/>
 
     <EditText
         android:id="@+id/reg_confirm_password_edit"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:inputType="textPassword" />
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:inputType="textPassword"
+        android:hint="************"
+        android:textSize="@dimen/font_size_small"/>
 
 
     <Button
         android:id="@+id/reg_registration_btn"
+        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:text="@string/signup_btn"/>
 
 

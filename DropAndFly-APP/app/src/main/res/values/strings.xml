@@ -6,7 +6,7 @@
     <string name="password">Mot de passe</string>
     <string name="forgot_pwd">Mot de passe oublié ?</string>
     <string name="connect_btn">Se connecter</string>
-    <string name="signup_link">Pas de compte ? Inscrivez-vous ! </string>
+    <string name="signup_link"><u>Pas de compte ? Inscrivez-vous !</u></string>
     <string name="lastname">Nom</string>
     <string name="firstname">Prénom</string>
     <string name="confirm_pwd">Confirmation du mot de passe</string>
@@ -19,4 +19,5 @@
     <string name="day_five">Vendredi</string>
     <string name="day_six">Samedi</string>
     <string name="day_seven">Dimanche</string>
+
 </resources>

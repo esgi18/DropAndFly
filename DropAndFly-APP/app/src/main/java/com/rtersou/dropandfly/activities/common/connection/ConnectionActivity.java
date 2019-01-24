@@ -58,7 +58,6 @@ public class ConnectionActivity extends AppCompatActivity {
                 Signup();
             }
         });
-
     }
 
     private void Connect() {
