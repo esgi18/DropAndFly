@@ -1,52 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp"
     tools:context=".activities.common.detail_reservation.DetailReservationActivity"
-    tools:layout_editor_absoluteY="25dp">
+    android:layout_margin="40dp"
+    android:orientation="vertical"
+    android:weightSum="12">
+
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/det1"
+        android:layout_weight="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lieu de dépose"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center"
+        android:text="@string/detail1"
+        android:textSize="@dimen/font_size_large"/>
+
 
     <TextView
-        android:id="@+id/editText"
+        android:id="@+id/det2"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="109dp"
-        android:layout_marginTop="8dp"
-        android:text="Adresse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv" />
+        android:layout_height="wrap_content"
+        android:text="@string/detail2"
+        android:textSize="@dimen/font_size_medium"/>
+
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+        android:id="@+id/det_address"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        android:gravity="center"
+        android:textSize="@dimen/font_size_small"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det3"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail3"
+            android:textSize="@dimen/font_size_medium"/>
+
+        <TextView
+            android:id="@+id/det4"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail4"
+            android:textSize="@dimen/font_size_medium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det_date_depose"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"/>
+
+        <TextView
+            android:id="@+id/det_heure_depose"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det5"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail3"
+            android:textSize="@dimen/font_size_medium"/>
+
+        <TextView
+            android:id="@+id/det6"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail4"
+            android:textSize="@dimen/font_size_medium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det_date_retrait"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"/>
+
+        <TextView
+            android:id="@+id/det_heure_retrait"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det7"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail7"
+            android:textSize="@dimen/font_size_medium"/>
+
+        <TextView
+            android:id="@+id/det_nb_luggages"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_medium"/>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
+        android:id="@+id/det_prix_calc"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        android:gravity="center"
+        android:text="@string/detail8"
+        android:textSize="@dimen/font_size_large"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

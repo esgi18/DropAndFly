@@ -47,6 +47,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void Registration(){
-        
+
     }
 }

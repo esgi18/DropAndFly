@@ -20,4 +20,13 @@
     <string name="day_six">Samedi</string>
     <string name="day_seven">Dimanche</string>
 
+    <string name="detail1">Détail de votre consigne</string>
+    <string name="detail2">Lieu de dépose</string>
+    <string name="detail3">Date de dépose</string>
+    <string name="detail4">Heure de dépose</string>
+    <string name="detail5">Date de retrait</string>
+    <string name="detail6">Heure de retrait</string>
+    <string name="detail7">Nombre de bagages</string>
+    <string name="detail8">Prix calculé :</string>
+
 </resources>
