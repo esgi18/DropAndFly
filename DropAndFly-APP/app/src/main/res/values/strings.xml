@@ -34,4 +34,9 @@
     <string name="en_attente">Demandes en attente</string>
     <string name="en_cours">Stockage en cours</string>
 
+    <string name="adresse">Entrez une adresse</string>
+
+    <string name="reservation">Réservation de votre consigne</string>
+    <string name="reserver">Réserver : 0 € </string>
+
 </resources>

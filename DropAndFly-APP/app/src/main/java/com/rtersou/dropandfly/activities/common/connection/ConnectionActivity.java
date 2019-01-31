@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.amitshekhar.DebugDB;
 import com.rtersou.dropandfly.R;
-import com.rtersou.dropandfly.activities.merchant.history.HistoryActivity;
-import com.rtersou.dropandfly.activities.merchant.home.HomeActivity;
 import com.rtersou.dropandfly.activities.user.registration.RegistrationActivity;
 import com.rtersou.dropandfly.database.ReservationController;
 import com.rtersou.dropandfly.models.Reservation;
@@ -70,23 +68,24 @@ public class ConnectionActivity extends AppCompatActivity {
     }
 
     private void Connect() {
-
+        Intent NewCasseActivity = new Intent(ConnectionActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
+        startActivity(NewCasseActivity);
+        ConnectionActivity.this.finish();
     }
 
     private void ForgotPwd() {
-
+        Intent NewCasseActivity = new Intent(ConnectionActivity.this, com.rtersou.dropandfly.activities.merchant.home.HomeActivity.class);
+        startActivity(NewCasseActivity);
+        ConnectionActivity.this.finish();
     }
 
     private void Signup() {
 
-        Intent NewCasseActivity = new Intent(ConnectionActivity.this, HistoryActivity.class);
-        startActivity(NewCasseActivity);
-        ConnectionActivity.this.finish();
-        /*
+
         Intent RegistrationActivity = new Intent(this, RegistrationActivity.class);
         startActivity(RegistrationActivity);
         ConnectionActivity.this.finish();
-        */
+
     }
 
     private void testBDD(){

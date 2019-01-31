@@ -1,9 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.user.reservation.ReservationActivity">
+    tools:context=".activities.user.reservation.ReservationActivity"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    android:weightSum="14">
 
-</android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/det1"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/reservation"
+        android:textSize="@dimen/font_size_large"/>
+
+
+    <TextView
+        android:id="@+id/det2"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/detail2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_medium"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border"
+        android:layout_weight="3">
+
+        <TextView
+            android:id="@+id/res_name"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/res_address1"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_small"/>
+
+        <TextView
+            android:id="@+id/res_address2"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            android:textSize="@dimen/font_size_small"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det3"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail3"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"/>
+
+        <TextView
+            android:id="@+id/det4"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail4"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/res_date_depose"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"
+            android:inputType="date"/>
+
+        <EditText
+            android:id="@+id/res_heure_depose"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"
+            android:inputType="time"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det5"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail3"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"/>
+
+        <TextView
+            android:id="@+id/det6"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail4"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/res_date_retrait"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"
+            android:inputType="date"/>
+
+        <EditText
+            android:id="@+id/res_heure_retrait"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_small"
+            android:inputType="time"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/det7"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/detail7"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"/>
+
+        <EditText
+            android:id="@+id/res_nb_luggages"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_medium"
+            android:inputType="number"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/res_btn"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/reserver"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_large"/>
+
+
+    </LinearLayout>
