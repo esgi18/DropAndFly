@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     tools:context=".activities.merchant.history.HistoryActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/merc_hist1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/history"
+        android:textSize="@dimen/font_size_large"/>
+
+    <ListView
+        android:id="@+id/mer_hist_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="40dp"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <Button
+            android:id="@+id/merc_hist_home"
+            android:layout_width="128px"
+            android:layout_height="128px"
+            android:background="@drawable/suitcase_icon_black"/>
+
+        <Button
+            android:id="@+id/merc_hist_history"
+            android:layout_width="128px"
+            android:layout_height="128px"
+            android:background="@drawable/hourglass_icon_blue"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

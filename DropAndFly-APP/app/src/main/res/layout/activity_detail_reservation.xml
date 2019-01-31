@@ -25,12 +25,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/detail2"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_size_medium"/>
 
 
     <TextView
-        android:id="@+id/det_address"
-        android:layout_weight="2"
+        android:id="@+id/det_address1"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_small"/>
+
+    <TextView
+        android:id="@+id/det_address2"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -49,6 +58,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/detail3"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
 
         <TextView
@@ -58,6 +68,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/detail4"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
     </LinearLayout>
 
@@ -97,6 +108,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/detail3"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
 
         <TextView
@@ -106,6 +118,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/detail4"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
     </LinearLayout>
 
@@ -145,6 +158,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/detail7"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
 
         <TextView
@@ -163,6 +177,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/detail8"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_size_large"/>
 
 

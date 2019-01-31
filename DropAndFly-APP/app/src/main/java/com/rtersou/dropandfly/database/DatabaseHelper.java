@@ -21,7 +21,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // RESERVATION  Table - column names
     public static final String KEY_DATE_START   = "date_start";
     public static final String KEY_DATE_END     = "date_end";
+    public static final String KEY_H_START      = "h_start";
+    public static final String KEY_H_END        = "h_end";
     public static final String KEY_NB_LUGGAGE   = "nb_luggage";
+    public static final String KEY_PRICE        = "price";
     public static final String KEY_USER_ID      = "user_id";
     public static final String KEY_SHOP_ID      = "shop_id";
 
@@ -34,7 +37,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_ID            + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_DATE_START    + " TEXT NOT NULL,"
             + KEY_DATE_END      + " TEXT NOT NULL,"
+            + KEY_H_START       + " TEXT NOT NULL,"
+            + KEY_H_END         + " TEXT NOT NULL,"
             + KEY_NB_LUGGAGE    + " INTEGER,"
+            + KEY_PRICE         + " INTEGER,"
             + KEY_USER_ID       + " INTEGER,"
             + KEY_SHOP_ID       + " INTEGER"
             + ")";

@@ -8,8 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amitshekhar.DebugDB;
 import com.rtersou.dropandfly.R;
+import com.rtersou.dropandfly.activities.merchant.history.HistoryActivity;
+import com.rtersou.dropandfly.activities.merchant.home.HomeActivity;
 import com.rtersou.dropandfly.activities.user.registration.RegistrationActivity;
+import com.rtersou.dropandfly.database.ReservationController;
+import com.rtersou.dropandfly.models.Reservation;
 
 public class ConnectionActivity extends AppCompatActivity {
 
@@ -19,6 +24,8 @@ public class ConnectionActivity extends AppCompatActivity {
     TextView forgotPwdText;
     TextView signupText;
 
+    private ReservationController reservationController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +33,8 @@ public class ConnectionActivity extends AppCompatActivity {
 
         initFileds();
         initListeners();
+        DebugDB.getAddressLog();
+        testBDD();
     }
 
 
@@ -69,8 +78,31 @@ public class ConnectionActivity extends AppCompatActivity {
     }
 
     private void Signup() {
+
+        Intent NewCasseActivity = new Intent(ConnectionActivity.this, HistoryActivity.class);
+        startActivity(NewCasseActivity);
+        ConnectionActivity.this.finish();
+        /*
         Intent RegistrationActivity = new Intent(this, RegistrationActivity.class);
         startActivity(RegistrationActivity);
         ConnectionActivity.this.finish();
+        */
+    }
+
+    private void testBDD(){
+        reservationController = new ReservationController(this);
+        reservationController.open();
+
+        Reservation reservation = new Reservation("21/01/2019","22/02/2019","10:30","19:45",3,1,18,1,1);
+
+
+        reservationController.createReservation(reservation);
+        reservationController.createReservation(reservation);
+        reservationController.createReservation(reservation);
+        reservationController.createReservation(reservation);
+        reservationController.createReservation(reservation);
+
+
+        reservationController.close();
     }
 }

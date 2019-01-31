@@ -18,7 +18,10 @@ public class ReservationController {
             DatabaseHelper.KEY_ID,
             DatabaseHelper.KEY_DATE_START,
             DatabaseHelper.KEY_DATE_END,
+            DatabaseHelper.KEY_H_START,
+            DatabaseHelper.KEY_H_END,
             DatabaseHelper.KEY_NB_LUGGAGE,
+            DatabaseHelper.KEY_PRICE,
             DatabaseHelper.KEY_USER_ID,
             DatabaseHelper.KEY_SHOP_ID};
 
@@ -41,7 +44,10 @@ public class ReservationController {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.KEY_DATE_START, reservation.getDate_start());
         values.put(DatabaseHelper.KEY_DATE_END, reservation.getDate_end());
+        values.put(DatabaseHelper.KEY_H_START, reservation.getH_start());
+        values.put(DatabaseHelper.KEY_H_END, reservation.getH_end());
         values.put(DatabaseHelper.KEY_NB_LUGGAGE, reservation.getNb_luggage());
+        values.put(DatabaseHelper.KEY_PRICE, reservation.getPrice());
         values.put(DatabaseHelper.KEY_USER_ID, reservation.getUser_id());
         values.put(DatabaseHelper.KEY_SHOP_ID, reservation.getShop_id());
 
@@ -103,7 +109,10 @@ public class ReservationController {
         reservation.setId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_ID)));
         reservation.setDate_start(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_DATE_START)));
         reservation.setDate_end(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_DATE_END)));
+        reservation.setH_start(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_H_START)));
+        reservation.setH_end(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_H_END)));
         reservation.setNb_luggage(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_NB_LUGGAGE)));
+        reservation.setPrice(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_PRICE)));
         reservation.setShop_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_SHOP_ID)));
         reservation.setUser_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_USER_ID)));
 
@@ -125,9 +134,12 @@ public class ReservationController {
         reservation.setId(cursor.getLong(0));
         reservation.setDate_start(cursor.getString(1));
         reservation.setDate_end(cursor.getString(2));
-        reservation.setNb_luggage(cursor.getInt(3));
-        reservation.setShop_id(cursor.getInt(4));
-        reservation.setUser_id(cursor.getInt(5));
+        reservation.setH_start(cursor.getString(3));
+        reservation.setH_end(cursor.getString(4));
+        reservation.setNb_luggage(cursor.getInt(5));
+        reservation.setPrice(cursor.getInt(6));
+        reservation.setShop_id(cursor.getInt(7));
+        reservation.setUser_id(cursor.getInt(8));
 
         return reservation;
     }

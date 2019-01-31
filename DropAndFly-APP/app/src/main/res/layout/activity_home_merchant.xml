@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     tools:context=".activities.merchant.home.HomeActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/merc_home_en_cours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/en_cours"
+            android:textSize="@dimen/font_size_large"/>
+
+        <ListView
+            android:id="@+id/mer_home_list_view_en_attente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
+
+        <TextView
+            android:id="@+id/merc_home_en_attente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/en_attente"
+            android:textSize="@dimen/font_size_large"/>
+
+        <ListView
+            android:id="@+id/mer_home_list_view_en_cours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:layout_marginBottom="80dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/merc_hist_home"
+        android:layout_width="128px"
+        android:layout_height="128px"
+        android:background="@drawable/suitcase_icon_blue"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="40dp"/>
+
+    <Button
+        android:id="@+id/merc_hist_history"
+        android:layout_width="128px"
+        android:layout_height="128px"
+        android:background="@drawable/hourglass_icon_black"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="40dp"/>
+
+
+</RelativeLayout>

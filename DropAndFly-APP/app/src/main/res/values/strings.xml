@@ -29,4 +29,9 @@
     <string name="detail7">Nombre de bagages</string>
     <string name="detail8">Prix calculé :</string>
 
+    <string name="history">Historique</string>
+
+    <string name="en_attente">Demandes en attente</string>
+    <string name="en_cours">Stockage en cours</string>
+
 </resources>
