@@ -76,4 +76,4 @@ $/.navigation/
 */build
 */captures
 *.externalNativeBuild
-
+.idea/*
