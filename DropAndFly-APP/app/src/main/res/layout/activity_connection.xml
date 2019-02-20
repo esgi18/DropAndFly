@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".connection.ConnectionActivity"
+    android:layout_margin="50dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/con_email_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="@string/email"
+        android:textSize="25dp"/>
+
+
+    <EditText
+        android:id="@+id/con_email_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/email" />
+
+    <TextView
+        android:id="@+id/con_password_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="@string/password"
+        android:textSize="25dp"/>
+
+    <EditText
+        android:id="@+id/con_password_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/con_forgot_pwd_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="@string/forgot_pwd"
+        android:clickable="true"/>
+
+    <Button
+        android:id="@+id/con_connect_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="40dp"
+        android:text="@string/connect_btn"/>
+
+    <TextView
+        android:id="@+id/con_signup_link_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="@string/signup_link"
+        android:clickable="true"/>
+
+</LinearLayout>
