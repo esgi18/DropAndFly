@@ -9,6 +9,4 @@
     <dimen name="margin_small">20dp</dimen>
     <dimen name="margin_medium">40dp</dimen>
     <dimen name="margin_large">80dp</dimen>
-
-
 </resources>
