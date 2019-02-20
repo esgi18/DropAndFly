@@ -50,7 +50,7 @@ public class FirebaseFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            Query query = db.collection("users").orderBy("id");
+            Query query = db.collection("users").orderBy("lastname");
             adapter = new MyFirebaseRecyclerViewAdapter(query, mListener);
             recyclerView.setAdapter(adapter);
         }

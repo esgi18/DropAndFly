@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.activities.user.searching.SearchingActivity;
+
+import static com.rtersou.dropandfly.helper.Helper.CURRENT_USER;
 
 public class HomeActivity extends AppCompatActivity {
 
     private EditText address;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,11 @@ public class HomeActivity extends AppCompatActivity {
 
         initFileds();
         initListeners();
+    }
+
+    private void getUser() {
+        Intent intent = getIntent();
+        intent.getSerializableExtra(CURRENT_USER);
     }
 
     private void initFileds() {
