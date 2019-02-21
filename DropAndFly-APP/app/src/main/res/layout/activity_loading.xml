@@ -7,23 +7,17 @@
     android:layout_margin="40dp"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="100dp"
-        android:src="@drawable/loading_icon"/>
-
     <TextView
         android:id="@+id/reg_email_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/load_msg"
-        android:textSize="@dimen/font_size_medium"/>
+        android:textSize="@dimen/font_size_medium" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:src="@drawable/loading_icon" />
 
 </LinearLayout>

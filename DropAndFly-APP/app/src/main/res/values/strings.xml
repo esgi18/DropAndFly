@@ -1,4 +1,5 @@
 <resources>
+    <string name="GOOGLE_MAP_KEY">AIzaSyA8rTP3zP6oA-6vKvm2v3WwNnyWwYMUXQk</string>
     <!-- FR -->
     <string name="app_name">Drop And Fly</string>
     <string name="load_msg">Chargement de l\'application</string>

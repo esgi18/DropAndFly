@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amitshekhar.DebugDB;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,6 +27,9 @@ import com.rtersou.dropandfly.database.ReservationController;
 import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Reservation;
 import com.rtersou.dropandfly.models.User;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static com.rtersou.dropandfly.helper.Helper.CURRENT_USER;
 import static com.rtersou.dropandfly.helper.Helper.NAV_USER_HOME;
@@ -38,38 +45,37 @@ public class ConnectionActivity extends AppCompatActivity {
     // declare Firebase instance
     FirebaseAuth mAuth;
 
+    private static final int RC_SIGN_IN = 123;
+
+
     private ReservationController reservationController;
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        /*
-        @TODO : Fonction HELPER.checkConnection()
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if( currentUser != null ) {
-            Helper.user = currentUser;
-            navHome(currentUser);
-        } else {
-            Helper.user = null;
-        }
-        */
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
+        /*
         setContentView(R.layout.activity_connection);
 
+
         // Initialize firebaseAuth Instance
-        mAuth = FirebaseAuth.getInstance();
+
+
+
         initFileds();
         initListeners();
         DebugDB.getAddressLog();
         testBDD();
+        */
     }
 
 
@@ -164,5 +170,28 @@ public class ConnectionActivity extends AppCompatActivity {
         NewHomeActivity.putExtra(CURRENT_USER, user);
         startActivity(NewHomeActivity);
         ConnectionActivity.this.finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                // ...
+                System.out.println("YEEES");
+                navHome(user);
+            } else {
+                System.out.println("NOOOOO");
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+            }
+        }
     }
 }

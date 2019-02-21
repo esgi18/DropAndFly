@@ -22,12 +22,17 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.activities.common.connection.ConnectionActivity;
+import com.rtersou.dropandfly.helper.FirestoreHelper;
 import com.rtersou.dropandfly.helper.Helper;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.rtersou.dropandfly.helper.Helper.CURRENT_USER;
+import static com.rtersou.dropandfly.helper.Helper.NAV_CONNECTION;
+import static com.rtersou.dropandfly.helper.Helper.NAV_MERCHANT_HOME;
+import static com.rtersou.dropandfly.helper.Helper.NAV_USER_HOME;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -74,62 +79,124 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void Registration(){
+
+        final Map<String, Object> user = checkValidInput();
+
+        if( user == null ) {
+            // Champs incorrects
+        } else {
+            mAuth.createUserWithEmailAndPassword(user.get("email").toString(), user.get("password").toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(Helper.LOG_EVENT_REGISTER, "createUserWithEmail:success");
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                //Helper.addUser(db, currentUser);
+                                FirestoreHelper.addData(db, "users", currentUser);
+                                nav(NAV_USER_HOME, currentUser);
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("REGISTRATION_EVENT", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            // ...
+                        }
+                    });
+        }
+
+    }
+
+    private void nav(String activityNav, FirebaseUser user) {
+
+        switch (activityNav) {
+            case NAV_USER_HOME :
+                Intent NewHomeActivity = new Intent(RegistrationActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
+                NewHomeActivity.putExtra(CURRENT_USER, user);
+                startActivity(NewHomeActivity);
+                break;
+            case NAV_CONNECTION :
+                Intent NewConnectionActivity = new Intent(RegistrationActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
+                NewConnectionActivity.putExtra(CURRENT_USER, user);
+                startActivity(NewConnectionActivity);
+                break;
+        }
+
+
+        RegistrationActivity.this.finish();
+    }
+
+    private Map<String, Object> checkValidInput() {
         String email = emailEdit.getText().toString();
         String password = passwordEdit.getText().toString();
         String confPassword = confpwdEdit.getText().toString();
         String lastname = lastnameEdit.getText().toString();
         String firstname = firstnameEdit.getText().toString();
 
-        // @TODO : Verif champs
+        boolean err = false;
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("REGISTRATION_EVENT", "createUserWithEmail:success");
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
-                            Helper.user = currentUser;
-                            navHome(currentUser);
+        // Vérif email
+        if( email == null || !checkEmailUnique(email) || !checkEmailValid(email) ) {
+            err = true;
+        }
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("REGISTRATION_EVENT", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+        // Vérif password
+        if( password == null || !checkPassword(password) || !checkConfirmPassword(password, confPassword)) {
+            err = true;
+        }
 
-                        // ...
-                    }
-                });
-        // register user in db
-        Map<String, Object> user = new HashMap<>();
-        user.put("email", email);
-        user.put("firstname", firstname);
-        user.put("lastname", lastname);
+        // Vérif lastname
+        if( lastname == null || !checkLastname(lastname) ) {
+            err = true;
+        }
 
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("REGISTRATION_EVENT", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("REGISTRATION_EVENT", "Error adding document", e);
-                    }
-                });
+        // Vérif firstname
+        if( firstname == null || !checkFirstname(firstname) ) {
+            err = true;
+        }
 
+        if( err ) {
+            return null;
+        } else {
+            Map<String, Object> user = new HashMap<>();
+            user.put("email", email);
+            user.put("firstname", firstname);
+            user.put("lastname", lastname);
+            return user;
+        }
     }
 
-    private void navHome(FirebaseUser user) {
-        Intent NewHomeActivity = new Intent(RegistrationActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
-        NewHomeActivity.putExtra(CURRENT_USER, user);
-        startActivity(NewHomeActivity);
-        RegistrationActivity.this.finish();
+    private boolean checkEmailValid(String email) {
+        // @TODO : Verification validité email
+        return true;
+    }
+
+    private boolean checkEmailUnique(String email) {
+        // @TODO : Verification email unique
+        return true;
+    }
+
+    private boolean checkPassword(String password) {
+        // @TODO : Vérification validité password
+        return true;
+    }
+
+    private boolean checkConfirmPassword(String password, String passwordConfirm) {
+        // @TODO : Vérification password = passwordConfirm
+        return true;
+    }
+
+    private boolean checkLastname(String lastname) {
+        // @TODO : Vérification validité lastname
+        return true;
+    }
+
+    private boolean checkFirstname(String firstname) {
+        // @TODO : Vérification validité firstname
+        return true;
     }
 }
