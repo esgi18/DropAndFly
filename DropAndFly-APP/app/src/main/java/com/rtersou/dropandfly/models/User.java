@@ -2,7 +2,7 @@ package com.rtersou.dropandfly.models;
 
 public class User {
 
-    private long id;
+    private String id;
     private String email;
     private String firstname;
     private String lastname;

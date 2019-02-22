@@ -19,6 +19,17 @@ public class Shop implements Serializable {
     public Shop() {
     }
 
+    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String name, int nb_luggage, int user_id) {
+        this.id = id;
+        this.address_city = address_city;
+        this.address_country = address_country;
+        this.address_cp = address_cp;
+        this.address_number = address_number;
+        this.address_street = address_street;
+        this.name = name;
+        this.nb_luggage = nb_luggage;
+    }
+
     public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String lat, String lng, String name, int nb_luggage, int user_id) {
         this.id = id;
         this.address_city = address_city;

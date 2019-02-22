@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public ArrayList<Shop> shops;
-    HashMap<Marker, String> markers = new HashMap<Marker, String>();
+    HashMap<Marker, Shop> markers = new HashMap<>();
 
 
 
@@ -140,7 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
              LatLng position = new LatLng(Double.parseDouble(s.getLat()), Double.parseDouble(s.getLng()));
              Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(position).title(s.getName()));
-             markers.put(marker, s.getId());
+             markers.put(marker, s);
 
          }
     }
@@ -188,8 +188,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        String idShop = markers.get(marker);
-        navReservation(idShop);
+        Shop shop = markers.get(marker);
+        navReservation(shop);
         return false;
     }
 
@@ -233,9 +233,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void navReservation(String idShop) {
+    public void navReservation(Shop shop) {
         Intent NewReservationActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.reservation.ReservationActivity.class);
-        NewReservationActivity.putExtra("id_shop", idShop);
+        NewReservationActivity.putExtra("shop", shop);
         startActivity(NewReservationActivity);
     }
 }

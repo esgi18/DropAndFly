@@ -152,7 +152,7 @@ public class ConnectionActivity extends AppCompatActivity {
         reservationController = new ReservationController(this);
         reservationController.open();
 
-        Reservation reservation = new Reservation("21/01/2019","22/02/2019","10:30","19:45",3,1,18,1,1);
+        Reservation reservation = new Reservation("21/01/2019","22/02/2019","10:30","19:45",3,1,18,"1","1");
 
 
         reservationController.createReservation(reservation);

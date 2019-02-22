@@ -43,5 +43,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="error">Erreur</string>
+
+    <!-- Database -->
+
+    <string name="shops">shops</string>
+    <string name="users">users</string>
+    <string name="reservations">reservations</string>
+    <string name="title_activity_maps2">Map</string>
+
 
 </resources>

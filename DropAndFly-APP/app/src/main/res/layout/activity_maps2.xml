@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+<EditText
+    android:id="@+id/user_home_address"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/adresse"
+    android:textSize="@dimen/font_size_medium"
+    android:layout_margin="50dp"
+    android:background="@drawable/border"
+    android:clickable="true"/>
+
+-->
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

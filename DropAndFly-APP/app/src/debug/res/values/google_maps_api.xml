@@ -4,16 +4,27 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
+<<<<<<< HEAD
     https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=5A:9E:F1:3D:98:92:61:27:BE:29:56:AE:22:11:4C:3B:EF:02:92:2A%3Bcom.rtersou.dropandfly.activities.user.home
+=======
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=14:B5:69:1D:3B:CE:41:23:50:7D:B9:D6:A4:D9:7F:C9:FF:67:70:F6%3Bcom.rtersou.dropandfly.http
+>>>>>>> origin/reservation
 
     You can also add your credentials to an existing key, using these values:
 
     Package name:
+<<<<<<< HEAD
     5A:9E:F1:3D:98:92:61:27:BE:29:56:AE:22:11:4C:3B:EF:02:92:2A
 
     SHA-1 certificate fingerprint:
     5A:9E:F1:3D:98:92:61:27:BE:29:56:AE:22:11:4C:3B:EF:02:92:2A
     5A:9E:F1:3D:98:92:61:27:BE:29:56:AE:22:11:4C:3B:EF:02:92:2A
+=======
+    14:B5:69:1D:3B:CE:41:23:50:7D:B9:D6:A4:D9:7F:C9:FF:67:70:F6
+
+    SHA-1 certificate fingerprint:
+    14:B5:69:1D:3B:CE:41:23:50:7D:B9:D6:A4:D9:7F:C9:FF:67:70:F6
+>>>>>>> origin/reservation
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key

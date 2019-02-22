@@ -45,14 +45,14 @@ public class LoadingActivity extends AppCompatActivity {
         super.onStart();
 
         // Check if user is signed in (non-null) and update UI accordingly.
-        /*FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if( currentUser != null ) {
             Log.i("LOG_USER_CONNECTED", currentUser.getDisplayName());
             navHome();
         } else {
             Log.i("LOG_USER_NOT_CONNECTED", "Connexion failed");
         }
-        */
+
     }
 
 

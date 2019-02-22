@@ -43,7 +43,7 @@ public class MerchantLineAdapter extends ArrayAdapter<Reservation> {
         if (item != null) {
 
             TextView name = viewHolder.itemView.findViewById(R.id.hist_merc_line_name);
-            name.setText(Integer.toString(item.getUser_id()));
+            name.setText(item.getUser_id());
 
             TextView date_dep = viewHolder.itemView.findViewById(R.id.hist_merc_line_date_dep);
             date_dep.setText(item.getDate_start());

@@ -68,7 +68,7 @@ public class ReservationController {
 
 
     public void deleteReservation(Reservation reservation) {
-        long id = reservation.getId();
+        String id = reservation.getId();
 
         database.delete(DatabaseHelper.TABLE_RESERVATION, DatabaseHelper.KEY_ID
                 + " = " + id, null);
@@ -106,15 +106,15 @@ public class ReservationController {
         }
 
         Reservation reservation = new Reservation();
-        reservation.setId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_ID)));
+        reservation.setId(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_ID)));
         reservation.setDate_start(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_DATE_START)));
         reservation.setDate_end(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_DATE_END)));
         reservation.setH_start(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_H_START)));
         reservation.setH_end(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_H_END)));
         reservation.setNb_luggage(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_NB_LUGGAGE)));
         reservation.setPrice(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_PRICE)));
-        reservation.setShop_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_SHOP_ID)));
-        reservation.setUser_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.KEY_USER_ID)));
+        reservation.setShop_id(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_SHOP_ID)));
+        reservation.setUser_id(cursor.getString(cursor.getColumnIndex(DatabaseHelper.KEY_USER_ID)));
 
         cursor.close();
 
@@ -131,15 +131,15 @@ public class ReservationController {
 
     private Reservation cursorToReservation(Cursor cursor) {
         Reservation reservation = new Reservation();
-        reservation.setId(cursor.getLong(0));
+        reservation.setId(cursor.getString(0));
         reservation.setDate_start(cursor.getString(1));
         reservation.setDate_end(cursor.getString(2));
         reservation.setH_start(cursor.getString(3));
         reservation.setH_end(cursor.getString(4));
         reservation.setNb_luggage(cursor.getInt(5));
         reservation.setPrice(cursor.getInt(6));
-        reservation.setShop_id(cursor.getInt(7));
-        reservation.setUser_id(cursor.getInt(8));
+        reservation.setShop_id(cursor.getString(7));
+        reservation.setUser_id(cursor.getString(8));
 
         return reservation;
     }

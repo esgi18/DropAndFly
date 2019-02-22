@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class Reservation implements Serializable {
 
-    private long id;
+    private String id;
     private String date_start;
     private String date_end;
     private String h_start;
@@ -13,14 +13,14 @@ public class Reservation implements Serializable {
     private int nb_luggage;
     private int statut;
     private int price;
-    private int user_id;
-    private int shop_id;
+    private String user_id;
+    private String shop_id;
 
 
     public Reservation() {
     }
 
-    public Reservation(String date_start, String date_end, String h_start, String h_end, int nb_luggage, int statut, int price, int user_id, int shop_id) {
+    public Reservation(String date_start, String date_end, String h_start, String h_end, int nb_luggage, int statut, int price, String user_id, String shop_id) {
         this.date_start = date_start;
         this.date_end = date_end;
         this.h_start = h_start;
@@ -32,11 +32,24 @@ public class Reservation implements Serializable {
         this.shop_id = shop_id;
     }
 
-    public long getId() {
+    public Reservation(String id, String date_start, String date_end, String h_start, String h_end, int nb_luggage, int statut, int price, String user_id, String shop_id) {
+        this.id = id;
+        this.date_start = date_start;
+        this.date_end = date_end;
+        this.h_start = h_start;
+        this.h_end = h_end;
+        this.nb_luggage = nb_luggage;
+        this.statut = statut;
+        this.price = price;
+        this.user_id = user_id;
+        this.shop_id = shop_id;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -56,19 +69,19 @@ public class Reservation implements Serializable {
         this.statut = statut;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    public int getShop_id() {
+    public String getShop_id() {
         return shop_id;
     }
 
-    public void setShop_id(int shop_id) {
+    public void setShop_id(String shop_id) {
         this.shop_id = shop_id;
     }
 
