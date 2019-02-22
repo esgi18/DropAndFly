@@ -35,7 +35,7 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+/*
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if( currentUser != null ) {
@@ -43,7 +43,7 @@ public class LoadingActivity extends AppCompatActivity {
             navHome();
         } else {
             Helper.user = null;
-        }
+        }*/
     }
 
 
