@@ -4,35 +4,55 @@ import java.io.Serializable;
 
 public class Shop implements Serializable {
 
-    private long id;
+    private String id;
     private String address_city;
     private String address_country;
     private String address_cp;
     private String address_number;
     private String address_street;
     private String name;
+    private String lat;
+    private String lng;
     private int nb_luggage;
     private int user_id;
 
     public Shop() {
     }
 
-    public Shop(String address_city, String address_country, String address_cp, String address_number, String address_street, String name, int nb_luggage, int user_id) {
+    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String lat, String lng, String name, int nb_luggage, int user_id) {
+        this.id = id;
         this.address_city = address_city;
         this.address_country = address_country;
         this.address_cp = address_cp;
         this.address_number = address_number;
         this.address_street = address_street;
+        this.lat = lat;
+        this.lng = lng;
         this.name = name;
         this.nb_luggage = nb_luggage;
-        this.user_id = user_id;
     }
 
-    public long getId() {
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

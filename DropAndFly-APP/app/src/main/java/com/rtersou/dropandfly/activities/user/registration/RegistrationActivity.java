@@ -94,7 +94,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 Log.d(Helper.LOG_EVENT_REGISTER, "createUserWithEmail:success");
                                 FirebaseUser currentUser = mAuth.getCurrentUser();
                                 //Helper.addUser(db, currentUser);
-                                FirestoreHelper.addData(db, "users", currentUser);
+                                //FirestoreHelper.addData(db, "users", currentUser);
                                 nav(NAV_USER_HOME, currentUser);
 
                             } else {

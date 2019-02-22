@@ -1,15 +1,20 @@
 package com.rtersou.dropandfly.activities.common.loading;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.activities.common.connection.ConnectionActivity;
@@ -22,12 +27,15 @@ import java.util.List;
 import java.util.Map;
 
 import static com.rtersou.dropandfly.helper.Helper.CURRENT_USER;
+import static com.rtersou.dropandfly.helper.Helper.NAV_USER_HOME;
 
 public class LoadingActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
 
     FirebaseAuth mAuth;
+
+    FirestoreHelper firestoreHelper;
 
     private static final int RC_SIGN_IN = 123;
 
@@ -37,13 +45,14 @@ public class LoadingActivity extends AppCompatActivity {
         super.onStart();
 
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        /*FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if( currentUser != null ) {
-            Helper.user = currentUser;
+            Log.i("LOG_USER_CONNECTED", currentUser.getDisplayName());
             navHome();
         } else {
-            Helper.user = null;
+            Log.i("LOG_USER_NOT_CONNECTED", "Connexion failed");
         }
+        */
     }
 
 
@@ -53,13 +62,8 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
 
         db = FirebaseFirestore.getInstance();
-        // [START config_signin]
-        // Configure Google Sign In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(Helper.WEB_CLIENT_ID)
-                .requestEmail()
-                .build();
-        // [END config_signin]
+        mAuth = FirebaseAuth.getInstance();
+        firestoreHelper = new FirestoreHelper();
 
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -74,7 +78,7 @@ public class LoadingActivity extends AppCompatActivity {
                         .build(),
                 RC_SIGN_IN);
 
-        mAuth = FirebaseAuth.getInstance();
+
     }
 
 
@@ -89,11 +93,28 @@ public class LoadingActivity extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 // ...
+                //
                 if( response.isNewUser() ) {
                     //return user;
-                    FirestoreHelper.addData(db, "users", currentUser);
+                    //firestoreHelper.addData("users", currentUser);
+                    db.collection("users")
+                            .add(data)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(Helper.DB_EVENT_ADD, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(Helper.DB_EVENT_ADD, "Error adding document", e);
+                                }
+                            });
                 }
                 navHome();
+
             } else {
                 System.out.println("NOOOOO");
                 // Sign in failed. If response is null the user canceled the

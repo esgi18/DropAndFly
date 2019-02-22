@@ -37,7 +37,7 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
     }
 
     private void loadShop() {
-
+        /*
         Shop shop1 = new Shop("Paris","France","75012","273","Faubourg Saint Antoine","ESGI",100,1);
         Shop shop2 = new Shop("Villejuif","France","94800","145","Rue de Chevilly","La casa",10,2);
         Shop shop3 = new Shop("Chevilly Larue","France","94580","38","Rue du Séminaire","2BSystem",20,3);
@@ -67,6 +67,7 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                 startActivity(ReservationActivity);
             }
         });
+        */
 
     }
 

@@ -22,19 +22,23 @@ public class FirestoreHelper {
 
 
     FirebaseAuth mUser;
+    FirebaseFirestore db;
 
+    public void FirestoreHelper() {
+        db = FirebaseFirestore.getInstance();
+        mUser = FirebaseAuth.getInstance();
+    }
 
     public static void disconnect() {
         FirebaseAuth.getInstance().signOut();
     }
     /**
      * Ajout d'un document firestore
-     * @param db
      * @param collection
      * @param data
      */
-    public static void addData(FirebaseFirestore db, String collection, Object data ) {
-        db = FirebaseFirestore.getInstance();
+    public FirebaseFirestore addData(String collection, Object data ) {
+
         db.collection(collection)
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -49,6 +53,7 @@ public class FirestoreHelper {
                         Log.w(Helper.DB_EVENT_ADD, "Error adding document", e);
                     }
                 });
+        return FirebaseFirestore.getInstance();
     }
 
     /**
