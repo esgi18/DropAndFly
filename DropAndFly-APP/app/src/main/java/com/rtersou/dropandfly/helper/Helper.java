@@ -33,6 +33,7 @@ public class Helper {
     public static final String DB_EVENT_DELETE = "Document deleted";
     public static final String DB_EVENT_GET = "Getting documents";
 
+    public static final String GOOGLE_API_KEY = "AIzaSyCSY3be92dQNox_brS8HV_0-yQwyH9Q_L4";
 
     public static final String WEB_CLIENT_ID = "1032255356100-3a1jc3kgmpgr6gdu4kdu44pujpaps0r7.apps.googleusercontent.com";
 

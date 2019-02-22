@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.Map;
 
 public class FirestoreHelper {
@@ -56,6 +57,7 @@ public class FirestoreHelper {
      * @param collection
      */
     public static void getAll(FirebaseFirestore db, String collection) {
+
         db.collection(collection)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

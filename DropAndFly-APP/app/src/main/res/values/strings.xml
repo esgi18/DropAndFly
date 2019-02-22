@@ -1,5 +1,5 @@
 <resources>
-    <string name="GOOGLE_MAP_KEY">AIzaSyA8rTP3zP6oA-6vKvm2v3WwNnyWwYMUXQk</string>
+    <string name="GOOGLE_MAP_KEY">AIzaSyCSY3be92dQNox_brS8HV_0-yQwyH9Q_L4</string>
     <!-- FR -->
     <string name="app_name">Drop And Fly</string>
     <string name="load_msg">Chargement de l\'application</string>
@@ -39,5 +39,9 @@
 
     <string name="reservation">Réservation de votre consigne</string>
     <string name="reserver">Réserver : 0 € </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
