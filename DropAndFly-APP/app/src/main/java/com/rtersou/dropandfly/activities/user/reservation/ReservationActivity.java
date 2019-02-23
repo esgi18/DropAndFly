@@ -12,12 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Reservation;
@@ -40,6 +44,7 @@ public class ReservationActivity extends AppCompatActivity {
     Button reservation;
 
     Shop shop;
+
 
     private FirebaseFirestore db;
 
@@ -145,8 +150,8 @@ public class ReservationActivity extends AppCompatActivity {
         }
 
         //date depos aprés retrait
-        else if(date_e > date_s){
-            showError("La date de retrait est antérieur à celle de dépose" + shop.getName());
+        else if(date_s > date_e){
+            showError("La date de retrait est antérieur à celle de dépose");
 
             return false;
         }
@@ -174,6 +179,7 @@ public class ReservationActivity extends AppCompatActivity {
     }
 
 
+
     private void addReservation() {
         db = FirebaseFirestore.getInstance();
         db.collection("reservations")
@@ -181,7 +187,6 @@ public class ReservationActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        showOk("Réservation enregistrée");
                         Log.d(Helper.DB_EVENT_ADD, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })

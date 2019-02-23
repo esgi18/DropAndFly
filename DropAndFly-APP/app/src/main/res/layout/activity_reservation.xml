@@ -165,7 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/detail3"
+            android:text="@string/detail5"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
 
@@ -175,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/detail4"
+            android:text="@string/detail6"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_medium"/>
     </LinearLayout>

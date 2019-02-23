@@ -14,12 +14,12 @@ public class Shop implements Serializable {
     private String lat;
     private String lng;
     private int nb_luggage;
-    private int user_id;
+    private String user_id;
 
     public Shop() {
     }
 
-    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String name, int nb_luggage, int user_id) {
+    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String name, int nb_luggage, String user_id) {
         this.id = id;
         this.address_city = address_city;
         this.address_country = address_country;
@@ -30,7 +30,7 @@ public class Shop implements Serializable {
         this.nb_luggage = nb_luggage;
     }
 
-    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String lat, String lng, String name, int nb_luggage, int user_id) {
+    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String lat, String lng, String name, int nb_luggage, String user_id) {
         this.id = id;
         this.address_city = address_city;
         this.address_country = address_country;
@@ -123,11 +123,11 @@ public class Shop implements Serializable {
         this.nb_luggage = nb_luggage;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 }

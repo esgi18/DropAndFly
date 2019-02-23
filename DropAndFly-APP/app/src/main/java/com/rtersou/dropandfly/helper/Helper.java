@@ -38,6 +38,7 @@ public class Helper {
     public static final String WEB_CLIENT_ID = "1032255356100-3a1jc3kgmpgr6gdu4kdu44pujpaps0r7.apps.googleusercontent.com";
 
     public static FirebaseUser user;
+    public static String userId;
 /*
     public static void addUser(FirebaseFirestore db, FirebaseUser user) {
         db.collection("users")

@@ -64,15 +64,15 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //Recuperation du shop
                                 Shop shop = new Shop(
-                                        document.get("id").toString(),
+                                        document.getId(),
                                         document.get("address_city").toString(),
                                         document.get("address_country").toString(),
                                         document.get("address_cp").toString(),
                                         document.get("address_number").toString(),
                                         document.get("address_street").toString(),
                                         document.get("name").toString(),
-                                        Integer.parseInt(document.get("nb_luggage").toString()),
-                                        Integer.parseInt(document.get("user_id").toString())
+                                        Integer.parseInt(document.get("places").toString()),
+                                        document.get("user_id").toString()
                                 );
                                 shopes.add(shop);
                             }
@@ -98,6 +98,7 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
         shopes.add(shop4);
         shopes.add(shop5);
         shopes.add(shop6);
+        */
 
         shopAdapter = new ShopAdapter(SearchingActivity.this, shopes);
         listView.setAdapter(shopAdapter);
@@ -114,7 +115,6 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                 startActivity(ReservationActivity);
             }
         });
-        */
 
     }
 
