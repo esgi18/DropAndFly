@@ -107,6 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     HashMap<Marker, Shop> markers = new HashMap<>();
 
     private void initListeners() {
+
         searchView = findViewById(R.id.search_widget);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -377,6 +378,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+        mMap.setOnMarkerClickListener(this);
         enableMyLocation();
         getAllShop();
     }
@@ -402,7 +404,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void navReservation(Shop shop) {
-        Intent NewReservationActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.searching.SearchingActivity.class);
+        Intent NewReservationActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.reservation.ReservationActivity.class);
         NewReservationActivity.putExtra("shop", shop);
         startActivity(NewReservationActivity);
     }
