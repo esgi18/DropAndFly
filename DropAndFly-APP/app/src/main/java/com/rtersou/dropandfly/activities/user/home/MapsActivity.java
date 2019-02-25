@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -95,11 +96,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private EditText searchView;
 
-    FirebaseFirestore db;
-    FusedLocationProviderClient mFusedLocationClient;
-    LocationRequest mLocationRequest;
-    GoogleApiClient mGoogleApiClient;
-    Location mCurrentLocation;
+    private FirebaseFirestore db;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mCurrentLocation;
+    private LocationCallback locationCallback;
     private GoogleMap mMap;
 
 
@@ -133,7 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onStart() {
         super.onStart();
-        if( isGooglePlayServicesAvailable() ) {
+        if (isGooglePlayServicesAvailable()) {
             buildGoogleApiClient();
             mGoogleApiClient.connect();
         }
@@ -167,7 +169,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!isGooglePlayServicesAvailable()) {
             finish();
         }
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+        initLocation();
 
 
         SupportMapFragment mapFragment =
@@ -175,6 +181,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         setUserId();
         mapFragment.getMapAsync(this);
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    mCurrentLocation = location;
+                    updateUI();
+                }
+            };
+        };
+
+
+    }
+
+    private void initLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            mCurrentLocation = location;
+                            updateUI();
+                        }
+                    }
+                });
 
     }
 
