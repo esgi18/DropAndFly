@@ -37,8 +37,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.common.connection.ConnectionActivity" />
-        <activity android:name=".activities.user.registration.RegistrationActivity" />
         <activity android:name=".activities.common.detail_reservation.DetailReservationActivity" />
+        <activity android:name=".activities.user.registration.RegistrationActivity" />
         <activity android:name=".activities.merchant.history.HistoryActivity" />
         <activity android:name=".activities.merchant.home.HomeActivity" />
         <activity android:name=".activities.user.history.HistoryActivity" />

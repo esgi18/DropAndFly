@@ -43,6 +43,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -113,12 +116,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    private void navSearch() {
-        Intent NewSearchActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.searching.SearchingActivity.class);
-        //NewReservationActivity.putExtra("shop", shop);
-        startActivity(NewSearchActivity);
-    }
-
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
@@ -175,6 +172,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+        setUserId();
         mapFragment.getMapAsync(this);
 
     }
@@ -221,7 +220,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Log.d(Helper.DB_EVENT_GET, document.getId() + " => " + document.getData());
                                 Map<String, Object> map = document.getData();
 
-                                shops.add(new Shop(document.getId(), map.get("address_city").toString(), map.get("address_country").toString(), map.get("address_cp").toString(), map.get("address_number").toString(), map.get("address_street").toString(), map.get("lat").toString(), map.get("lng").toString(), map.get("name").toString(), Integer.parseInt(map.get("places").toString()), 0));
+                                shops.add(new Shop(document.getId(), map.get("address_city").toString(), map.get("address_country").toString(), map.get("address_cp").toString(), map.get("address_number").toString(), map.get("address_street").toString(), map.get("lat").toString(), map.get("lng").toString(), map.get("name").toString(), Integer.parseInt(map.get("places").toString()), "0"));
 
                             }
                             setShops(shops);
@@ -406,8 +405,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void navReservation(Shop shop) {
-        Intent NewReservationActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.reservation.ReservationActivity.class);
+        Intent NewReservationActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.searching.SearchingActivity.class);
         NewReservationActivity.putExtra("shop", shop);
         startActivity(NewReservationActivity);
+    }
+
+
+    private void navSearch() {
+        Intent NewSearchActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.searching.SearchingActivity.class);
+        //NewReservationActivity.putExtra("shop", shop);
+        startActivity(NewSearchActivity);
+    }
+
+    private void setUserId(){
+        db.collection("users")
+                .whereEqualTo("email", FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Helper.userEmail = document.getId();
+                            }
+                        } else {
+                            Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 }

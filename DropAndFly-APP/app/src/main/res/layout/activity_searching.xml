@@ -15,10 +15,10 @@
             android:id="@+id/search_searchview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:iconifiedByDefault="false">
+            android:iconifiedByDefault="false"
+            android:padding="2dp"
+            android:queryHint="Search...." />
 
-            <requestFocus />
-        </SearchView>
 
         <ListView
             android:id="@+id/search_listview"
