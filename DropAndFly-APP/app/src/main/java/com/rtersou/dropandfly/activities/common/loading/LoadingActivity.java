@@ -24,7 +24,9 @@ import com.rtersou.dropandfly.helper.FirestoreHelper;
 import com.rtersou.dropandfly.helper.Helper;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.rtersou.dropandfly.helper.Helper.isMerchant;
 
@@ -42,7 +44,7 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        db = FirebaseFirestore.getInstance();
+       /* db = FirebaseFirestore.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if( currentUser != null ) {
@@ -52,6 +54,7 @@ public class LoadingActivity extends AppCompatActivity {
         } else {
             Log.i("LOG_USER_NOT_CONNECTED", "Connexion failed");
         }
+        */
 
     }
 
@@ -94,6 +97,12 @@ public class LoadingActivity extends AppCompatActivity {
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 // ...
                 //
+                Map<String, Object> mData = new HashMap<>();
+                mData.put("email", response.getEmail());
+                System.out.println(currentUser.getDisplayName());
+                mData.put("firstname", getFirstnameUser(currentUser.getDisplayName()));
+                mData.put("lastname", getLastnameUser(currentUser.getDisplayName()));
+                System.out.println(data);
                 if( response.isNewUser() ) {
                     //return user;
                     //firestoreHelper.addData("users", currentUser);
@@ -125,6 +134,15 @@ public class LoadingActivity extends AppCompatActivity {
                 // ...
             }
         }
+    }
+
+    public String getFirstnameUser(String name) {
+        return name.substring(name.indexOf(' '));
+
+    }
+
+    public String getLastnameUser (String name) {
+        return name.substring(0, name.indexOf(' '));
     }
 
     private void getShopId(){
