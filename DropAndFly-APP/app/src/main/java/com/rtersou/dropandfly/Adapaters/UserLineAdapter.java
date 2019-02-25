@@ -71,8 +71,6 @@ public class UserLineAdapter extends ArrayAdapter<Reservation> {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         name.setText(document.get("firstname").toString() + " " + document.get("lastname").toString());
-                                        document.get("name").toString();
-
                                     }
 
                                 } else {
