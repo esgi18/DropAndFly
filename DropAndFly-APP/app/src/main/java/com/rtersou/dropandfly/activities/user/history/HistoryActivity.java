@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,12 +26,11 @@ import com.rtersou.dropandfly.models.Reservation;
 
 import java.util.ArrayList;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
+    Spinner spinner;
     private FirebaseFirestore db;
-    ArrayList<Reservation> reservationsStarted = new ArrayList<>();
-    ArrayList<Reservation> reservationsWait = new ArrayList<>();
-    ArrayList<Reservation> reservationsFinish = new ArrayList<>();
+    ArrayList<Reservation> reservations = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +43,39 @@ public class HistoryActivity extends AppCompatActivity {
                 .build();
         db.setFirestoreSettings(settings);
 
-        getReservations();
+        initFields();
+        initListeners();
+
+        getReservations(0);
     }
 
-    private void getReservations(){
-        reservationsFinish.clear();
-        reservationsStarted.clear();
-        reservationsWait.clear();
+    private void initFields(){
+        spinner = findViewById(R.id.user_hist_spinner);
+    }
+
+    private void initListeners(){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.user_spinner, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        getReservations(pos);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+
+
+    private void getReservations(final int type){
+        reservations.clear();
 
         db.collection("reservations")
                 .whereEqualTo("user_id", FirebaseAuth.getInstance().getCurrentUser().getEmail())
@@ -69,39 +96,27 @@ public class HistoryActivity extends AppCompatActivity {
                                         Integer.parseInt(document.get("price").toString()),
                                         document.get("user_id").toString(),
                                         document.get("shop_id").toString()
-                                        );
+                                );
 
-                                switch (reservation.getStatut()){
-                                    case 0 :
-                                        reservationsWait.add(reservation);
-                                        break;
-                                    case 1 :
-                                        reservationsStarted.add(reservation);
-                                        break;
-                                    case 2 :
-                                        reservationsFinish.add(reservation);
-                                        break;
-                                    default :
-                                        break;
+                                if (reservation.getStatut() == type) {
+                                    reservations.add(reservation);
                                 }
                             }
-
-                            loadFinish();
-                            loadStarted();
-                            loadWait();
+                            loadReservation();
 
                         } else {
                             Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
                         }
                     }
                 });
+
     }
 
-    private void loadWait() {
+    private void loadReservation() {
 
         ListView listView = findViewById(R.id.user_hist_list_view_en_attente);
 
-        UserLineAdapter adapter = new UserLineAdapter(HistoryActivity.this, R.layout.activity_history_user_line, reservationsWait);
+        UserLineAdapter adapter = new UserLineAdapter(HistoryActivity.this, R.layout.activity_history_user_line, reservations);
         listView.setAdapter(adapter);
 
 
@@ -111,47 +126,7 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent DetailReservationActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
-                DetailReservationActivity.putExtra("reservation",reservationsStarted.get(position));
-                startActivity(DetailReservationActivity);
-            }
-        });
-    }
-
-    private void loadStarted() {
-
-        ListView listView = findViewById(R.id.user_hist_list_view_en_cours);
-
-        UserLineAdapter adapter = new UserLineAdapter(HistoryActivity.this, R.layout.activity_history_user_line, reservationsStarted);
-        listView.setAdapter(adapter);
-
-
-        // Ecoute des clicks sur les lignes
-        listView.setClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent DetailReservationActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
-                DetailReservationActivity.putExtra("reservation",reservationsStarted.get(position));
-                startActivity(DetailReservationActivity);
-            }
-        });
-    }
-
-    private void loadFinish() {
-
-        ListView listView = findViewById(R.id.user_hist_list_view_passé);
-
-        UserLineAdapter adapter = new UserLineAdapter(HistoryActivity.this, R.layout.activity_history_user_line, reservationsFinish);
-        listView.setAdapter(adapter);
-
-
-        // Ecoute des clicks sur les lignes
-        listView.setClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent DetailReservationActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
-                DetailReservationActivity.putExtra("reservation",reservationsFinish.get(position));
+                DetailReservationActivity.putExtra("reservation",reservations.get(position));
                 startActivity(DetailReservationActivity);
             }
         });

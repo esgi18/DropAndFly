@@ -92,7 +92,7 @@ public class LoadingActivity extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 Helper.userEmail = currentUser.getEmail();
-                Helper.isMerchant = true;
+                Helper.isMerchant = false;
                 // ...
                 //
                 if( response.isNewUser() ) {
@@ -159,7 +159,7 @@ public class LoadingActivity extends AppCompatActivity {
             getShopId();
         }
         else {
-            Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
+            Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.user.history.HistoryActivity.class);
             startActivity(NewHomeActivity);
             LoadingActivity.this.finish();
         }
