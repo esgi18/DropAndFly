@@ -16,6 +16,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class FirestoreHelper {
@@ -55,6 +56,7 @@ public class FirestoreHelper {
                 });
         return FirebaseFirestore.getInstance();
     }
+
 
     /**
      * Get all documents

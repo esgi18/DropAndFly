@@ -42,16 +42,17 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-/*
+        /*db = FirebaseFirestore.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if( currentUser != null ) {
             Log.i("LOG_USER_CONNECTED", currentUser.getDisplayName());
+
             navHome();
         } else {
             Log.i("LOG_USER_NOT_CONNECTED", "Connexion failed");
-        }
-*/
+        }*/
+
     }
 
 
@@ -91,8 +92,6 @@ public class LoadingActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                Helper.userEmail = currentUser.getEmail();
-                Helper.isMerchant = false;
                 // ...
                 //
                 if( response.isNewUser() ) {
@@ -155,15 +154,30 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     private void navHome() {
-        if(isMerchant){
-            getShopId();
-        }
-        else {
-            Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
-            startActivity(NewHomeActivity);
-            LoadingActivity.this.finish();
-        }
+
+        db.collection("shops")
+                .whereEqualTo("user_id", FirebaseAuth.getInstance().getCurrentUser().getEmail()).limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if( task.isSuccessful() ) {
+                            for(QueryDocumentSnapshot document : task.getResult()) {
+                                if( document != null ) {
+                                    Helper.isMerchant = true;
+                                    getShopId();
+                                    return;
+                                }
+                            }
+                            Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
+                            startActivity(NewHomeActivity);
+                            LoadingActivity.this.finish();
+                        }
+                    }
+                });
+
     }
+
 
 
 }

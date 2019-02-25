@@ -39,7 +39,7 @@ public class Helper {
 
     public static FirebaseUser user;
     public static String userEmail;
-    public static Boolean isMerchant;
+    public static Boolean isMerchant = false;
 /*
     public static void addUser(FirebaseFirestore db, FirebaseUser user) {
         db.collection("users")

@@ -63,11 +63,9 @@ import java.util.Map;
 import static android.location.LocationManager.GPS_PROVIDER;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
-        LocationListener,
         GoogleMap.OnMarkerClickListener,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMarkerDragListener,
-        SeekBar.OnSeekBarChangeListener,
         GoogleMap.OnInfoWindowLongClickListener,
         GoogleMap.OnInfoWindowCloseListener,
         GoogleMap.OnMyLocationButtonClickListener,
@@ -172,10 +170,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-
-        initLocation();
-
-
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
@@ -197,7 +191,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-
+/*
     private void initLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -209,21 +203,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                            mCurrentLocation = location;
-                            updateUI();
-                        }
-                    }
-                });
+
 
     }
-
+*/
 
     private void initDb() {
         db = FirebaseFirestore.getInstance();
@@ -248,7 +231,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             String lat = String.valueOf(mCurrentLocation.getLatitude());
             String lng = String.valueOf(mCurrentLocation.getLongitude());
             //mMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng))).title("It's Me!"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)), 12.0f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)), 16.0f));
         } else {
             Log.d(TAG, "location is null ...............");
         }
@@ -307,6 +290,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                mCurrentLocation = location;
+                                updateUI();
+                            }
+                        }
+                    });
         }
     }
 
@@ -328,13 +323,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "Location update started ..............: ");
     }
 
-
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -347,16 +335,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         }
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
     @Override
@@ -383,17 +361,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
-
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-
     }
 
     @Override
@@ -418,30 +393,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMyLocationClick(@NonNull Location location) {
         Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
         updateUI();
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG, "Firing onLocationChanged..............................................");
-        mCurrentLocation = location;
-       // mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        updateUI();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
     }
 
     @Override
