@@ -63,22 +63,24 @@ public class UserLineAdapter extends ArrayAdapter<Reservation> {
 
             if(Helper.isMerchant){
                 db.collection("users")
-                        .document(item.getUser_id())
+                        .whereEqualTo("email",item.getUser_id())
                         .get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document.exists()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
                                         name.setText(document.get("firstname").toString() + " " + document.get("lastname").toString());
                                         document.get("name").toString();
-                                    } else {
+
                                     }
+
                                 } else {
+                                    Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
                                 }
                             }
                         });
+
             }
             else {
                 db.collection("shops")
