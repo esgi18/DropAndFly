@@ -52,5 +52,12 @@
     <string name="reservations">reservations</string>
     <string name="title_activity_maps2">Map</string>
 
+    <string-array name="user_spinner">
+        <item>En Attente</item>
+        <item>Acceptés</item>
+        <item>En Cours</item>
+        <item>Terminées</item>
+        <item>Réfusées</item>
+    </string-array>
 
 </resources>

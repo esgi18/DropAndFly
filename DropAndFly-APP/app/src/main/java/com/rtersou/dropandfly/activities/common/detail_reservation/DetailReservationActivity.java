@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -26,6 +26,7 @@ import com.rtersou.dropandfly.activities.merchant.home.HomeActivity;
 import com.rtersou.dropandfly.activities.user.history.HistoryActivity;
 import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Reservation;
+import com.rtersou.dropandfly.models.Shop;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +64,7 @@ public class DetailReservationActivity extends AppCompatActivity {
         initFileds();
         initListeners();
         getReservation();
+        getShop();
         setReservation();
         setBtn();
     }
@@ -91,27 +93,101 @@ public class DetailReservationActivity extends AppCompatActivity {
         bAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(reservation.getStatut()){
-                    case 0 :
-                        acceptReservation();
-                        break;
-                    case 1 :
-                        finishReservation();
-                        break;
-                    case 2 :
-                        break;
-                    default:
-                        break;
+                if(isMerchant){
+                    switch(reservation.getStatut()){
+                        case 0 :
+                            acceptReservation();
+                            break;
+                        case 1 :
+                            break;
+                        case 2 :
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else {
+                    switch(reservation.getStatut()){
+                        case 0 :
+                            removeReservation();
+                            break;
+                        case 1 :
+                            depotReservation();
+                            break;
+                        case 2 :
+                            finishReservation();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
             }
         });
 
         bCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelReservation();
+                if(isMerchant){
+                    switch(reservation.getStatut()){
+                        case 0 :
+                            cancelReservation();
+                            break;
+                        case 1 :
+                            depotReservation();
+                            break;
+                        case 2 :
+                            finishReservation();
+                            break;
+                        case 3 :
+                            break;
+                        case 4 :
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else {
+                    switch(reservation.getStatut()){
+                        case 0 :
+                            DetailReservationActivity.this.finish();
+                            break;
+                        case 1 :
+                            break;
+                        case 2 :
+                            break;
+                        case 3 :
+                            break;
+                        case 4 :
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         });
+    }
+
+    private void getShop(){
+
+        db.collection("shops").document(reservation.getShop_id())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                address1.setText(document.get("address_number").toString() + " "
+                                        + document.get("address_street").toString());
+                                address2.setText(document.get("address_city").toString() + ", "
+                                        + document.get("address_cp").toString());
+                            } else {
+                            }
+                        } else {
+                        }
+                    }
+                });
     }
 
     private void getReservation(){
@@ -144,14 +220,47 @@ public class DetailReservationActivity extends AppCompatActivity {
                     bAccept.setText("Accepter");
                     break;
                 case 1 :
+                    break;
+                case 2 :
+                    break;
+                case 3 :
+                    break;
+                case 4 :
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
+            switch(reservation.getStatut()) {
+                case 0:
                     bAccept.setEnabled(true);
                     bAccept.setVisibility(View.VISIBLE);
-                    bAccept.setText("Terminer");
+                    bAccept.setText("Annuler");
+
+                    bCancel.setEnabled(true);
+                    bCancel.setVisibility(View.VISIBLE);
+                    bCancel.setText("Retour");
+                    break;
+                case 1:
+                    bAccept.setEnabled(true);
+                    bAccept.setVisibility(View.VISIBLE);
+                    bAccept.setText("Déposer");
 
                     bCancel.setVisibility(View.VISIBLE);
                     bCancel.setText("Annuler");
                     break;
-                case 2 :
+                case 2:
+                    bAccept.setEnabled(true);
+                    bAccept.setVisibility(View.VISIBLE);
+                    bAccept.setText("Retirer");
+
+                    bCancel.setVisibility(View.VISIBLE);
+                    bCancel.setText("Annuler");
+                    break;
+                case 3 :
+                    break;
+                case 4 :
                     break;
                 default:
                     break;
@@ -178,6 +287,27 @@ public class DetailReservationActivity extends AppCompatActivity {
                         showError("Erreur réservation en attente");
                     }
                 });
+    }
+
+    private void depotReservation(){
+        SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
+
+        reservation.setStatut(2);
+
+        db.collection("reservations").document(reservation.getId())
+                .update("statut",2)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        showOk("Consigne Déposée");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showError("Erreur dêpot en attente");
+                    }
+                });
 
         db.collection("shops").document(sharedPreferences.getString("shop_id",""))
                 .update("places",sharedPreferences.getInt("places",0) - reservation.getNb_luggage())
@@ -191,7 +321,6 @@ public class DetailReservationActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                     }
                 });
-
     }
 
     private void cancelReservation(){
@@ -212,6 +341,26 @@ public class DetailReservationActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         showError("Erreur réservation en attente");
+                    }
+                });
+
+    }
+
+    private void removeReservation(){
+        reservation.setStatut(4);
+
+        db.collection("reservations").document(reservation.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        showOk("Réservation annulée");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showError("Erreur");
                     }
                 });
 
