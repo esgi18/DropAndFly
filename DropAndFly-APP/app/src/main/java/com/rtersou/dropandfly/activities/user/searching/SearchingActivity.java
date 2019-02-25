@@ -69,6 +69,7 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                                         document.get("address_number").toString(),
                                         document.get("address_street").toString(),
                                         document.get("name").toString(),
+                                        document.get("description").toString(),
                                         Integer.parseInt(document.get("places").toString()),
                                         document.get("user_id").toString()
                                 );

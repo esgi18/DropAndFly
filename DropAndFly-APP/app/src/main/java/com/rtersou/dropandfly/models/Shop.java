@@ -11,6 +11,7 @@ public class Shop implements Serializable {
     private String address_number;
     private String address_street;
     private String name;
+    private String description;
     private String lat;
     private String lng;
     private int nb_luggage;
@@ -19,7 +20,7 @@ public class Shop implements Serializable {
     public Shop() {
     }
 
-    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String name, int nb_luggage, String user_id) {
+    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String name, String description, int nb_luggage, String user_id) {
         this.id = id;
         this.address_city = address_city;
         this.address_country = address_country;
@@ -27,10 +28,11 @@ public class Shop implements Serializable {
         this.address_number = address_number;
         this.address_street = address_street;
         this.name = name;
+        this.description = description;
         this.nb_luggage = nb_luggage;
     }
 
-    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String lat, String lng, String name, int nb_luggage, String user_id) {
+    public Shop(String id, String address_city, String address_country, String address_cp, String address_number, String address_street, String lat, String lng, String name, String description, int nb_luggage, String user_id) {
         this.id = id;
         this.address_city = address_city;
         this.address_country = address_country;
@@ -40,7 +42,16 @@ public class Shop implements Serializable {
         this.lat = lat;
         this.lng = lng;
         this.name = name;
+        this.description = description;
         this.nb_luggage = nb_luggage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getLat() {

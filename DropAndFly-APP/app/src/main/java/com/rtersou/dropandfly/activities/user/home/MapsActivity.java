@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.SeekBar;
@@ -93,6 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final long FASTEST_INTERVAL = 1000 * 5;
 
     private EditText searchView;
+    private Button btn_history;
 
     private FirebaseFirestore db;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -115,6 +117,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 navSearch();
             }
         });
+
+        btn_history = findViewById(R.id.btn_history);
+        btn_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navHistory();
+            }
+        });
+
+
     }
 
     protected void createLocationRequest() {
@@ -250,7 +262,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Log.d(Helper.DB_EVENT_GET, document.getId() + " => " + document.getData());
                                 Map<String, Object> map = document.getData();
 
-                                shops.add(new Shop(document.getId(), map.get("address_city").toString(), map.get("address_country").toString(), map.get("address_cp").toString(), map.get("address_number").toString(), map.get("address_street").toString(), map.get("lat").toString(), map.get("lng").toString(), map.get("name").toString(), Integer.parseInt(map.get("places").toString()), "0"));
+                                shops.add(new Shop(document.getId(), map.get("address_city").toString(), map.get("address_country").toString(), map.get("address_cp").toString(), map.get("address_number").toString(), map.get("address_street").toString(), map.get("lat").toString(), map.get("lng").toString(), map.get("name").toString(), map.get("description").toString(), Integer.parseInt(map.get("places").toString()), "0"));
 
                             }
                             setShops(shops);
@@ -273,10 +285,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void createShopsMarkers() {
         for( Shop s : shops ) {
             LatLng position = new LatLng(Double.parseDouble(s.getLat()), Double.parseDouble(s.getLng()));
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(position).title(s.getName()));
-            markers.put(marker, s);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(position)
+                    .title(s.getName());
 
+            InfoWindowData info = new InfoWindowData();
+            info.setTitle(s.getName());
+            info.setDescription(s.getDescription());
+            info.setShop(s);
+            CustomInfoWindow customInfoWindow = new CustomInfoWindow(this);
+            mMap.setInfoWindowAdapter(customInfoWindow);
+
+            Marker marker = mMap.addMarker(markerOptions);
+            marker.setTag(info);
+            markers.put(marker, s);
         }
         updateUI();
     }
@@ -340,7 +362,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
+        InfoWindowData shop = (InfoWindowData)marker.getTag();
+        navReservation(shop.getShop());
     }
 
     @Override
@@ -355,8 +378,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Shop shop = markers.get(marker);
-        navReservation(shop);
+        marker.showInfoWindow();
         return false;
     }
 
@@ -379,6 +401,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
         enableMyLocation();
         getAllShop();
     }
@@ -410,10 +433,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private void navSearch() {
+    public void navSearch() {
         Intent NewSearchActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.searching.SearchingActivity.class);
         //NewReservationActivity.putExtra("shop", shop);
         startActivity(NewSearchActivity);
+    }
+
+    public void navHistory() {
+        Intent NewHistoryActivity = new Intent(MapsActivity.this, com.rtersou.dropandfly.activities.user.history.HistoryActivity.class);
+        startActivity(NewHistoryActivity);
     }
 
     private void setUserId(){
