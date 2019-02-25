@@ -28,15 +28,11 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rtersou.dropandfly.R;
-import com.rtersou.dropandfly.activities.common.loading.LoadingActivity;
 import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Shop;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -251,7 +247,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Helper.userId = document.getId();
+                                Helper.userEmail = document.getId();
                             }
                         } else {
                             Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());

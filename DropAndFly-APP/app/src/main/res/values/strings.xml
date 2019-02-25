@@ -21,7 +21,7 @@
     <string name="day_six">Samedi</string>
     <string name="day_seven">Dimanche</string>
 
-    <string name="detail1">Détail de votre consigne</string>
+    <string name="detail1">Détail de la consigne</string>
     <string name="detail2">Lieu de dépose</string>
     <string name="detail3">Date de dépose</string>
     <string name="detail4">Heure de dépose</string>
@@ -38,7 +38,7 @@
     <string name="adresse">Entrez une adresse</string>
 
     <string name="reservation">Réservation de votre consigne</string>
-    <string name="reserver">Réserver : 0 € </string>
+    <string name="reserver">Réserver : 10 € </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

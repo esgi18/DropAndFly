@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -106,60 +107,72 @@ public class ReservationActivity extends AppCompatActivity {
     }
 
     private Boolean verifFields(){
-        int jour_s  = Integer.parseInt(jour_start.getText().toString());
-        int h_s     = Integer.parseInt(h_start.getText().toString());
-        int jour_e  = Integer.parseInt(jour_end.getText().toString());
-        int mois_s  = Integer.parseInt(mois_start.getText().toString());
-        int h_e     = Integer.parseInt(h_end.getText().toString());
-        int min_s   = Integer.parseInt(min_start.getText().toString());
-        int mois_e  = Integer.parseInt(mois_end.getText().toString());
-        int min_e   = Integer.parseInt(min_end.getText().toString());
-        int nb_luggages = Integer.parseInt(luggages.getText().toString());
+        if(!jour_start.getText().toString().equalsIgnoreCase("") &&
+                !h_start.getText().toString().equalsIgnoreCase("") &&
+                !jour_end.getText().toString().equalsIgnoreCase("") &&
+                !mois_start.getText().toString().equalsIgnoreCase("") &&
+                !h_end.getText().toString().equalsIgnoreCase("") &&
+                !min_start.getText().toString().equalsIgnoreCase("") &&
+                !min_end.getText().toString().equalsIgnoreCase("") &&
+                !mois_end.getText().toString().equalsIgnoreCase("") &&
+                !luggages.getText().toString().equalsIgnoreCase("")) {
 
-        int date_s = Integer.parseInt(
-                mois_start.getText().toString() +
-                        jour_start.getText().toString() +
-                        h_start.getText().toString() +
-                        min_start.getText().toString());
+            int jour_s = Integer.parseInt(jour_start.getText().toString());
+            int h_s = Integer.parseInt(h_start.getText().toString());
+            int jour_e = Integer.parseInt(jour_end.getText().toString());
+            int mois_s = Integer.parseInt(mois_start.getText().toString());
+            int h_e = Integer.parseInt(h_end.getText().toString());
+            int min_s = Integer.parseInt(min_start.getText().toString());
+            int mois_e = Integer.parseInt(mois_end.getText().toString());
+            int min_e = Integer.parseInt(min_end.getText().toString());
+            int nb_luggages = Integer.parseInt(luggages.getText().toString());
 
-        int date_e = Integer.parseInt(
-                mois_end.getText().toString() +
-                        jour_end.getText().toString() +
-                        h_end.getText().toString() +
-                        min_end.getText().toString());
+            int date_s = Integer.parseInt(
+                    mois_start.getText().toString() +
+                            jour_start.getText().toString() +
+                            h_start.getText().toString() +
+                            min_start.getText().toString());
+
+            int date_e = Integer.parseInt(
+                    mois_end.getText().toString() +
+                            jour_end.getText().toString() +
+                            h_end.getText().toString() +
+                            min_end.getText().toString());
 
 
-        //Erreur de date
-        if(jour_s > 31 || jour_s < 1 ||
-                jour_e > 31 || jour_e < 1 ||
-                mois_s > 12 || mois_s < 1 ||
-                mois_e > 12 || mois_e < 1 ||
-                h_e > 24 || h_e < 0 ||
-                h_s > 24 || h_s < 0 ||
-                min_e > 60 || min_e < 0 ||
-                min_s > 60 || min_s < 0){
-            showError("Date incorrect");
-            return false;
+            //Erreur de date
+            if (jour_s > 31 || jour_s < 1 ||
+                    jour_e > 31 || jour_e < 1 ||
+                    mois_s > 12 || mois_s < 1 ||
+                    mois_e > 12 || mois_e < 1 ||
+                    h_e > 24 || h_e < 0 ||
+                    h_s > 24 || h_s < 0 ||
+                    min_e > 60 || min_e < 0 ||
+                    min_s > 60 || min_s < 0) {
+                showError("Date incorrect");
+                return false;
+            }
+
+            //Trop de baggages
+            else if (nb_luggages > shop.getNb_luggage()) {
+                showError("Seulement " + shop.getNb_luggage() + " places disponibles chez " + shop.getName());
+
+                return false;
+            }
+
+            //date depos aprés retrait
+            else if (date_s > date_e) {
+                showError("La date de retrait est antérieur à celle de dépose");
+
+                return false;
+            } else {
+                return true;
+            }
         }
-
-        //Trop de baggages
-        else if(nb_luggages > shop.getNb_luggage()){
-            showError("Seulement " + shop.getNb_luggage() + " places disponibles chez " + shop.getName());
-
-            return false;
-        }
-
-        //date depos aprés retrait
-        else if(date_s > date_e){
-            showError("La date de retrait est antérieur à celle de dépose");
-
-            return false;
-        }
-
         else {
-            return true;
+            showError("Veuillez renseigner tout les champs");
+            return false;
         }
-
     }
 
     private Reservation createReservation() {
@@ -181,7 +194,6 @@ public class ReservationActivity extends AppCompatActivity {
 
 
     private void addReservation() {
-        db = FirebaseFirestore.getInstance();
         db.collection("reservations")
                 .add(createReservation())
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

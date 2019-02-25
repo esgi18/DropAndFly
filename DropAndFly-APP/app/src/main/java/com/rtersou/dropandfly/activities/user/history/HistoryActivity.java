@@ -42,13 +42,15 @@ public class HistoryActivity extends AppCompatActivity {
                 .build();
         db.setFirestoreSettings(settings);
 
-        loadFinish();
-        loadStarted();
-        loadWait();
+        getReservations();
     }
 
     private void getReservations(){
-        db.collection("reservation")
+        reservationsFinish.clear();
+        reservationsStarted.clear();
+        reservationsWait.clear();
+
+        db.collection("reservations")
                 .whereEqualTo("user_id", FirebaseAuth.getInstance().getCurrentUser().getEmail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -83,6 +85,11 @@ public class HistoryActivity extends AppCompatActivity {
                                         break;
                                 }
                             }
+
+                            loadFinish();
+                            loadStarted();
+                            loadWait();
+
                         } else {
                             Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
                         }
@@ -103,9 +110,9 @@ public class HistoryActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent CasseActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
-                CasseActivity.putExtra("reservation",reservationsStarted.get(position));
-                startActivity(CasseActivity);
+                Intent DetailReservationActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
+                DetailReservationActivity.putExtra("reservation",reservationsStarted.get(position));
+                startActivity(DetailReservationActivity);
             }
         });
     }
@@ -123,9 +130,9 @@ public class HistoryActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent CasseActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
-                CasseActivity.putExtra("reservation",reservationsStarted.get(position));
-                startActivity(CasseActivity);
+                Intent DetailReservationActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
+                DetailReservationActivity.putExtra("reservation",reservationsStarted.get(position));
+                startActivity(DetailReservationActivity);
             }
         });
     }
@@ -143,9 +150,9 @@ public class HistoryActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent CasseActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
-                CasseActivity.putExtra("reservation",reservationsFinish.get(position));
-                startActivity(CasseActivity);
+                Intent DetailReservationActivity = new Intent(HistoryActivity.this, DetailReservationActivity.class);
+                DetailReservationActivity.putExtra("reservation",reservationsFinish.get(position));
+                startActivity(DetailReservationActivity);
             }
         });
     }

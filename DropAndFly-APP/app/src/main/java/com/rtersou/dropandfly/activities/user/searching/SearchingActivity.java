@@ -44,7 +44,6 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
         db.setFirestoreSettings(settings);
         initFileds();
         getShop();
-        loadShop();
     }
 
     private void initFileds(){
@@ -60,7 +59,6 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            System.out.print("aaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+task.getResult());
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //Recuperation du shop
                                 Shop shop = new Shop(
@@ -76,6 +74,7 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                                 );
                                 shopes.add(shop);
                             }
+                            loadShop();
                         } else {
                             Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
                         }
@@ -85,12 +84,12 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
 
     private void loadShop() {
 /*
-        Shop shop1 = new Shop("Paris","France","75012","273","Faubourg Saint Antoine","ESGI",100,1);
-        Shop shop2 = new Shop("Villejuif","France","94800","145","Rue de Chevilly","La casa",10,2);
-        Shop shop3 = new Shop("Chevilly Larue","France","94580","38","Rue du Séminaire","2BSystem",20,3);
-        Shop shop4 = new Shop("Gif-Sur-Yvette","France","91190","29","Allée des graviers","Parents",4,4);
-        Shop shop5 = new Shop("New York","USA","3459823","23","2nd Street","Starbucks",1000,5);
-        Shop shop6 = new Shop("Nulle Part","Je sais pas","Nope","0","Rue inconnue","Existe pas",1,6);
+        Shop shop1 = new Shop("","Paris","France","75012","273","Faubourg Saint Antoine","ESGI",100,,"aaa");
+        Shop shop2 = new Shop("","Villejuif","France","94800","145","Rue de Chevilly","La casa",10,"6");
+        Shop shop3 = new Shop("","Chevilly Larue","France","94580","38","Rue du Séminaire","2BSystem",20,"6");
+        Shop shop4 = new Shop("","Gif-Sur-Yvette","France","91190","29","Allée des graviers","Parents",4,"6");
+        Shop shop5 = new Shop("","New York","USA","3459823","23","2nd Street","Starbucks",1000,"");
+        Shop shop6 = new Shop("","Nulle Part","Je sais pas","Nope","0","Rue inconnue","Existe pas",1,"6");
 
         shopes.add(shop1);
         shopes.add(shop2);
@@ -109,7 +108,6 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("id : " + id + " pos : " +position);
                 Intent ReservationActivity = new Intent(SearchingActivity.this, com.rtersou.dropandfly.activities.user.reservation.ReservationActivity.class);
                 ReservationActivity.putExtra("shop",shopes.get((int)id));
                 startActivity(ReservationActivity);

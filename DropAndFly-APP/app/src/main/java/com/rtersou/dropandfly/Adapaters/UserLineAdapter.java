@@ -1,6 +1,8 @@
 package com.rtersou.dropandfly.Adapaters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.rtersou.dropandfly.R;
+import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Reservation;
 
 import java.util.ArrayList;
@@ -27,6 +37,13 @@ public class UserLineAdapter extends ArrayAdapter<Reservation> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setTimestampsInSnapshotsEnabled(true)
+                .build();
+        db.setFirestoreSettings(settings);
+
         if (convertView == null) {
             convertView = LayoutInflater.from(this.getContext())
                     .inflate(R.layout.activity_history_user_line, parent, false);
@@ -42,8 +59,48 @@ public class UserLineAdapter extends ArrayAdapter<Reservation> {
         Reservation item = getItem(position);
         if (item != null) {
 
-            TextView name = viewHolder.itemView.findViewById(R.id.hist_user_line_name);
-            name.setText(item.getShop_id());
+            final TextView name = viewHolder.itemView.findViewById(R.id.hist_user_line_name);
+
+            if(Helper.isMerchant){
+                db.collection("users")
+                        .document(item.getUser_id())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        name.setText(document.get("firstname").toString() + " " + document.get("lastname").toString());
+                                        document.get("name").toString();
+                                    } else {
+                                    }
+                                } else {
+                                }
+                            }
+                        });
+            }
+            else {
+                db.collection("shops")
+                        .document(item.getShop_id())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        name.setText(document.get("name").toString());
+                                        document.get("name").toString();
+                                    } else {
+                                    }
+                                } else {
+                                }
+                            }
+                        });
+                name.setText(item.getShop_id());
+            }
+
 
             TextView date_dep = viewHolder.itemView.findViewById(R.id.hist_user_line_date_dep);
             date_dep.setText(item.getDate_start());

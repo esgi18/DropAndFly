@@ -22,7 +22,7 @@
             android:textSize="@dimen/font_size_large"/>
 
         <ListView
-            android:id="@+id/mer_home_list_view_en_attente"
+            android:id="@+id/mer_home_list_view_en_cours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="6"/>
@@ -37,7 +37,7 @@
             android:textSize="@dimen/font_size_large"/>
 
         <ListView
-            android:id="@+id/mer_home_list_view_en_cours"
+            android:id="@+id/mer_home_list_view_en_attente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="4"

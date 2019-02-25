@@ -1,6 +1,7 @@
 package com.rtersou.dropandfly.activities.common.loading;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,26 +9,24 @@ import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.rtersou.dropandfly.R;
-import com.rtersou.dropandfly.activities.common.connection.ConnectionActivity;
 import com.rtersou.dropandfly.helper.FirestoreHelper;
 import com.rtersou.dropandfly.helper.Helper;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.rtersou.dropandfly.helper.Helper.CURRENT_USER;
-import static com.rtersou.dropandfly.helper.Helper.NAV_USER_HOME;
+import static com.rtersou.dropandfly.helper.Helper.isMerchant;
 
 public class LoadingActivity extends AppCompatActivity {
 
@@ -92,6 +91,8 @@ public class LoadingActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                Helper.userEmail = currentUser.getEmail();
+                Helper.isMerchant = true;
                 // ...
                 //
                 if( response.isNewUser() ) {
@@ -102,6 +103,7 @@ public class LoadingActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
+                                    navHome();
                                     Log.d(Helper.DB_EVENT_ADD, "DocumentSnapshot added with ID: " + documentReference.getId());
 
                                 }
@@ -115,6 +117,7 @@ public class LoadingActivity extends AppCompatActivity {
                 }
                 navHome();
 
+
             } else {
                 System.out.println("NOOOOO");
                 // Sign in failed. If response is null the user canceled the
@@ -125,10 +128,41 @@ public class LoadingActivity extends AppCompatActivity {
         }
     }
 
+    private void getShopId(){
+        db.collection("shops")
+                .whereEqualTo("user_id", Helper.userEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
+                                sharedPreferences
+                                        .edit()
+                                        .putString("shop_id", document.getId())
+                                        .putInt("places", Integer.parseInt(document.get("places").toString()))
+                                        .apply();
+                            }
+                            Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.merchant.home.HomeActivity.class);
+                            startActivity(NewHomeActivity);
+                            LoadingActivity.this.finish();
+                        } else {
+                            Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
     private void navHome() {
-        Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
-        startActivity(NewHomeActivity);
-        LoadingActivity.this.finish();
+        if(isMerchant){
+            getShopId();
+        }
+        else {
+            Intent NewHomeActivity = new Intent(LoadingActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
+            startActivity(NewHomeActivity);
+            LoadingActivity.this.finish();
+        }
     }
 
 
