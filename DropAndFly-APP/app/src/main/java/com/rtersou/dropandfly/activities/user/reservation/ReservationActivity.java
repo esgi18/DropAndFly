@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -177,6 +179,50 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        date_start.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                reservation.setText("RESERVER : " + getPrice() + " €");
+            }
+        });
+
+        time_start.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                reservation.setText("RESERVER : " + getPrice() + " €");
+            }
+        });
+
+        date_end.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                reservation.setText("RESERVER : " + getPrice() + " €");
+            }
+        });
+
+        time_end.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                reservation.setText("RESERVER : " + getPrice() + " €");
+            }
+        });
+
     }
 
     private void setAddress() {
@@ -192,6 +238,30 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
             addReservation();
             ReservationActivity.this.finish();
         }
+    }
+
+    private int getPrice(){
+        String dateStart = date_start.getText().toString();
+        String dateEnd = date_end.getText().toString();
+        String timeStart = time_start.getText().toString();
+        String timeEnd = time_end.getText().toString();
+        if( !dateStart.equalsIgnoreCase("") && !dateEnd.equalsIgnoreCase("") && !timeStart.equalsIgnoreCase("") && !timeEnd.equalsIgnoreCase("")){
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            try {
+                Date dDateStart = sdf.parse(dateStart + " " + timeStart);
+                Date dDateEnd = sdf.parse(dateEnd + " " + timeEnd);
+
+                long diff = dDateEnd.getTime() - dDateStart.getTime();
+                int hours = (int) (diff / (1000 * 60 * 60));
+
+                return hours * 4;
+            }
+            catch (ParseException e) {
+                return 0;
+            }
+        }
+        return 0;
     }
 
     private Boolean verifFields() {
@@ -248,7 +318,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
                 time_end.getText().toString(),
                 Integer.parseInt(luggages.getText().toString()),
                 0,
-                10,
+                getPrice(),
                 FirebaseAuth.getInstance().getCurrentUser().getEmail(),
                 shop.getId()
 
