@@ -99,8 +99,10 @@ public class DetailReservationActivity extends AppCompatActivity {
                             acceptReservation();
                             break;
                         case 1 :
+                            depotReservation();
                             break;
                         case 2 :
+                            finishReservation();
                             break;
                         default:
                             break;
@@ -112,10 +114,8 @@ public class DetailReservationActivity extends AppCompatActivity {
                             removeReservation();
                             break;
                         case 1 :
-                            depotReservation();
                             break;
                         case 2 :
-                            finishReservation();
                             break;
                         default:
                             break;
@@ -219,9 +219,21 @@ public class DetailReservationActivity extends AppCompatActivity {
                     bAccept.setVisibility(View.VISIBLE);
                     bAccept.setText("Accepter");
                     break;
-                case 1 :
+                case 1:
+                    bAccept.setEnabled(true);
+                    bAccept.setVisibility(View.VISIBLE);
+                    bAccept.setText("Déposer");
+
+                    bCancel.setVisibility(View.VISIBLE);
+                    bCancel.setText("Annuler");
                     break;
-                case 2 :
+                case 2:
+                    bAccept.setEnabled(true);
+                    bAccept.setVisibility(View.VISIBLE);
+                    bAccept.setText("Retirer");
+
+                    bCancel.setVisibility(View.VISIBLE);
+                    bCancel.setText("Annuler");
                     break;
                 case 3 :
                     break;
@@ -243,20 +255,8 @@ public class DetailReservationActivity extends AppCompatActivity {
                     bCancel.setText("Retour");
                     break;
                 case 1:
-                    bAccept.setEnabled(true);
-                    bAccept.setVisibility(View.VISIBLE);
-                    bAccept.setText("Déposer");
-
-                    bCancel.setVisibility(View.VISIBLE);
-                    bCancel.setText("Annuler");
                     break;
                 case 2:
-                    bAccept.setEnabled(true);
-                    bAccept.setVisibility(View.VISIBLE);
-                    bAccept.setText("Retirer");
-
-                    bCancel.setVisibility(View.VISIBLE);
-                    bCancel.setText("Annuler");
                     break;
                 case 3 :
                     break;
@@ -290,7 +290,7 @@ public class DetailReservationActivity extends AppCompatActivity {
     }
 
     private void depotReservation(){
-        SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
 
         reservation.setStatut(2);
 
@@ -314,6 +314,9 @@ public class DetailReservationActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("places", sharedPreferences.getInt("places",0) - reservation.getNb_luggage());
+                        editor.commit();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -367,7 +370,7 @@ public class DetailReservationActivity extends AppCompatActivity {
     }
 
     private void finishReservation(){
-        SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
 
         reservation.setStatut(3);
 
@@ -391,6 +394,9 @@ public class DetailReservationActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("places", sharedPreferences.getInt("places",0) + reservation.getNb_luggage());
+                        editor.commit();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
