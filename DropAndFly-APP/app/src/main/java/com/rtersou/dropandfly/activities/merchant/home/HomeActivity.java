@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     ArrayList<Reservation> reservationsStarted = new ArrayList<>();
     ArrayList<Reservation> reservationsWait = new ArrayList<>();
+    ArrayList<Reservation> reservationsEnCours = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
     private void getReservations(){
         reservationsStarted.clear();
         reservationsWait.clear();
+        reservationsEnCours.clear();
         SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
         db.collection("reservations")
                 .whereEqualTo("shop_id", sharedPreferences.getString("shop_id",""))
@@ -102,12 +104,16 @@ public class HomeActivity extends AppCompatActivity {
                                     case 1 :
                                         reservationsStarted.add(reservation);
                                         break;
+                                    case 2 :
+                                        reservationsEnCours.add(reservation);
+                                        break;
                                     default :
                                         break;
                                 }
                             }
                             loadStarted();
                             loadWait();
+                            loadEncours();
                         } else {
                             Log.w(Helper.DB_EVENT_GET, "Error getting documents.", task.getException());
                         }
@@ -137,9 +143,29 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void loadStarted() {
+    private void loadEncours() {
 
         ListView listView = findViewById(R.id.mer_home_list_view_en_cours);
+
+        UserLineAdapter adapter = new UserLineAdapter(HomeActivity.this, R.layout.activity_history_merchant_line, reservationsEnCours);
+        listView.setAdapter(adapter);
+
+
+        // Ecoute des clicks sur les lignes
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent DetailReservationActivity = new Intent(HomeActivity.this, DetailReservationActivity.class);
+                DetailReservationActivity.putExtra("reservation",reservationsEnCours.get(position));
+                startActivity(DetailReservationActivity);
+            }
+        });
+    }
+
+    private void loadStarted() {
+
+        ListView listView = findViewById(R.id.mer_home_list_view_stockage_en_attente);
 
         UserLineAdapter adapter = new UserLineAdapter(HomeActivity.this, R.layout.activity_history_merchant_line, reservationsStarted);
         listView.setAdapter(adapter);

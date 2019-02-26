@@ -11,7 +11,21 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="16">
+
+        <TextView
+            android:id="@+id/merc_home_stockage_en_attente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Stockage en attente"
+            android:textSize="@dimen/font_size_large"/>
+
+        <ListView
+            android:id="@+id/mer_home_list_view_stockage_en_attente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
 
         <TextView
             android:id="@+id/merc_home_en_cours"
