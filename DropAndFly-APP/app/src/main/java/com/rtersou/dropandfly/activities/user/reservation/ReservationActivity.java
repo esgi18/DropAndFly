@@ -1,14 +1,15 @@
 package com.rtersou.dropandfly.activities.user.reservation;
 
 import android.app.DatePickerDialog;
+import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +18,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Reservation;
@@ -243,8 +242,8 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
 
         Reservation reservation = new Reservation(
                 date_start.getText().toString(),
-                time_start.getText().toString(),
                 date_end.getText().toString(),
+                time_start.getText().toString(),
                 time_end.getText().toString(),
                 Integer.parseInt(luggages.getText().toString()),
                 0,
@@ -266,6 +265,9 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(Helper.DB_EVENT_ADD, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        // @TODO : Send notif
+
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -276,6 +278,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
                 });
 
     }
+
 
     private void showError(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

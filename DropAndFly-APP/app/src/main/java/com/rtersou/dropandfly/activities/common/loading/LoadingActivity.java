@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -19,6 +20,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.helper.FirestoreHelper;
 import com.rtersou.dropandfly.helper.Helper;
@@ -40,11 +43,30 @@ public class LoadingActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
 
+    private static final String TAG = "LoadingActivity";
+
 
     @Override
     protected void onStart() {
         super.onStart();
+
        db = FirebaseFirestore.getInstance();
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        Toast.makeText(LoadingActivity.this, token, Toast.LENGTH_LONG).show();
+                    }
+                });
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if( currentUser != null ) {
@@ -78,6 +100,7 @@ public class LoadingActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setIsSmartLockEnabled(false)
                         .setAvailableProviders(providers)
+                        .setLogo(R.mipmap.logo)
                         .build(),
                 RC_SIGN_IN);
 
@@ -172,6 +195,7 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     private void navHome() {
+
 
         db.collection("shops")
                 .whereEqualTo("user_id", FirebaseAuth.getInstance().getCurrentUser().getEmail()).limit(1)
