@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:weightSum="14">
 
-
     <TextView
         android:id="@+id/det1"
         android:layout_weight="2"
@@ -100,56 +99,20 @@
         android:layout_weight="1">
 
         <EditText
-            android:id="@+id/res_jour_depose"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
-
-        <TextView
+            android:id="@+id/date_picker_depose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="/"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_size_medium"/>
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="date" />
 
         <EditText
-            android:id="@+id/res_mois_depose"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
-
-        <EditText
-            android:id="@+id/res_heure_depose"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
-
-        <TextView
+            android:id="@+id/hour_picker_depose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_size_medium"/>
-
-        <EditText
-            android:id="@+id/res_min_depose"
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
+            android:ems="10"
+            android:inputType="time" />
 
     </LinearLayout>
 
@@ -187,55 +150,21 @@
         android:layout_weight="1">
 
         <EditText
-            android:id="@+id/res_jour_retrait"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
-        <TextView
+            android:id="@+id/date_picker_retrait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="/"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_size_medium"/>
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="date" />
 
         <EditText
-            android:id="@+id/res_mois_retrait"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
-
-        <EditText
-            android:id="@+id/res_heure_retrait"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
-
-        <TextView
+            android:id="@+id/hour_picker_retrait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_size_medium"/>
-
-        <EditText
-            android:id="@+id/res_min_retrait"
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/font_size_small"
-            android:inputType="number"/>
+            android:ems="10"
+            android:inputType="time" />
+
     </LinearLayout>
 
     <LinearLayout

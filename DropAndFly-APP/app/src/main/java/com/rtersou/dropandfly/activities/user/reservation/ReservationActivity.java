@@ -1,5 +1,7 @@
 package com.rtersou.dropandfly.activities.user.reservation;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,8 +12,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,19 +32,21 @@ import com.rtersou.dropandfly.helper.Helper;
 import com.rtersou.dropandfly.models.Reservation;
 import com.rtersou.dropandfly.models.Shop;
 
-public class ReservationActivity extends AppCompatActivity {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+public class ReservationActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView name;
     TextView address1;
     TextView address2;
-    EditText jour_start;
-    EditText jour_end;
-    EditText h_start;
-    EditText h_end;
-    EditText mois_start;
-    EditText mois_end;
-    EditText min_start;
-    EditText min_end;
+    EditText date_start;
+    EditText time_start;
+    EditText date_end;
+    EditText time_end;
     EditText luggages;
     Button reservation;
 
@@ -49,10 +55,20 @@ public class ReservationActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
+    private DatePickerDialog fromDatePickerDialog;
+    private DatePickerDialog toDatePickerDialog;
+    private TimePickerDialog fromTimePickerDialog;
+    private TimePickerDialog toTimePickerDialog;
+
+    private SimpleDateFormat dateFormatter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
+
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE);
 
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -63,24 +79,67 @@ public class ReservationActivity extends AppCompatActivity {
         initFields();
         initListeners();
         setAddress();
+        setDateTimeField();
     }
 
     private void initFields() {
-
         name        = findViewById(R.id.res_name);
         address1    = findViewById(R.id.res_address1);
         address2    = findViewById(R.id.res_address2);
-        jour_start  = findViewById(R.id.res_jour_depose);
-        h_start     = findViewById(R.id.res_heure_depose);
-        jour_end    = findViewById(R.id.res_jour_retrait);
-        h_end       = findViewById(R.id.res_heure_retrait);
-        mois_start  = findViewById(R.id.res_mois_depose);
-        min_start   = findViewById(R.id.res_min_depose);
-        mois_end    = findViewById(R.id.res_mois_retrait);
-        min_end     = findViewById(R.id.res_min_retrait);
+        date_start  = findViewById(R.id.date_picker_depose);
+        time_start  = findViewById(R.id.hour_picker_depose);
+        date_end    = findViewById(R.id.date_picker_retrait);
+        time_end    = findViewById(R.id.hour_picker_retrait);
         luggages    = findViewById(R.id.res_nb_luggages);
         reservation = findViewById(R.id.res_btn);
     }
+
+    private void setDateTimeField() {
+
+        Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                date_start.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        toDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                date_end.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+
+        fromTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                time_start.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
+            }
+
+        }, hour, minute, true);
+
+
+        toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener(){
+            @Override
+            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                time_end.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
+            }
+
+        }, hour, minute, true);
+    }
+
 
     private void initListeners() {
         reservation.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +148,35 @@ public class ReservationActivity extends AppCompatActivity {
                 Reservation();
             }
         });
+
+        date_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fromDatePickerDialog.show();
+            }
+        });
+
+        date_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toDatePickerDialog.show();
+            }
+        });
+
+        time_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fromTimePickerDialog.show();
+            }
+        });
+
+        time_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toTimePickerDialog.show();
+            }
+        });
+
     }
 
     private void setAddress() {
@@ -106,66 +194,42 @@ public class ReservationActivity extends AppCompatActivity {
         }
     }
 
-    private Boolean verifFields(){
-        if(!jour_start.getText().toString().equalsIgnoreCase("") &&
-                !h_start.getText().toString().equalsIgnoreCase("") &&
-                !jour_end.getText().toString().equalsIgnoreCase("") &&
-                !mois_start.getText().toString().equalsIgnoreCase("") &&
-                !h_end.getText().toString().equalsIgnoreCase("") &&
-                !min_start.getText().toString().equalsIgnoreCase("") &&
-                !min_end.getText().toString().equalsIgnoreCase("") &&
-                !mois_end.getText().toString().equalsIgnoreCase("") &&
-                !luggages.getText().toString().equalsIgnoreCase("")) {
+    private Boolean verifFields() {
+        String dateStart = date_start.getText().toString();
+        String dateEnd = date_end.getText().toString();
+        String timeStart = time_start.getText().toString();
+        String timeEnd = time_end.getText().toString();
 
-            int jour_s = Integer.parseInt(jour_start.getText().toString());
-            int h_s = Integer.parseInt(h_start.getText().toString());
-            int jour_e = Integer.parseInt(jour_end.getText().toString());
-            int mois_s = Integer.parseInt(mois_start.getText().toString());
-            int h_e = Integer.parseInt(h_end.getText().toString());
-            int min_s = Integer.parseInt(min_start.getText().toString());
-            int mois_e = Integer.parseInt(mois_end.getText().toString());
-            int min_e = Integer.parseInt(min_end.getText().toString());
+        if( !dateStart.equalsIgnoreCase("") && !dateEnd.equalsIgnoreCase("") && !timeStart.equalsIgnoreCase("") && !timeEnd.equalsIgnoreCase("") && !luggages.getText().toString().equalsIgnoreCase("")) {
+
             int nb_luggages = Integer.parseInt(luggages.getText().toString());
 
-            int date_s = Integer.parseInt(
-                    mois_start.getText().toString() +
-                            jour_start.getText().toString() +
-                            h_start.getText().toString() +
-                            min_start.getText().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            try {
+                Date dDateStart = sdf.parse(dateStart + " " + timeStart);
+                Date dDateEnd = sdf.parse(dateEnd + " " + timeEnd);
 
-            int date_e = Integer.parseInt(
-                    mois_end.getText().toString() +
-                            jour_end.getText().toString() +
-                            h_end.getText().toString() +
-                            min_end.getText().toString());
+                if( new Date().after(dDateStart) ) {
+                    showError("La date de dépose ne doit pas être passée");
+                    return false;
+                }
 
-
-            //Erreur de date
-            if (jour_s > 31 || jour_s < 1 ||
-                    jour_e > 31 || jour_e < 1 ||
-                    mois_s > 12 || mois_s < 1 ||
-                    mois_e > 12 || mois_e < 1 ||
-                    h_e > 24 || h_e < 0 ||
-                    h_s > 24 || h_s < 0 ||
-                    min_e > 60 || min_e < 0 ||
-                    min_s > 60 || min_s < 0) {
-                showError("Date incorrect");
+                if( dDateStart.after(dDateEnd) ) {
+                    showError("La date de retrait doit être ultérieure à la date de dépose");
+                    return false;
+                }
+            } catch (ParseException e) {
+                showError("La date est incorrecte");
                 return false;
             }
 
             //Trop de baggages
-            else if (nb_luggages > shop.getNb_luggage()) {
+            if (nb_luggages > shop.getNb_luggage()) {
                 showError("Seulement " + shop.getNb_luggage() + " places disponibles chez " + shop.getName());
 
                 return false;
             }
-
-            //date depos aprés retrait
-            else if (date_s > date_e) {
-                showError("La date de retrait est antérieur à celle de dépose");
-
-                return false;
-            } else {
+            else {
                 return true;
             }
         }
@@ -176,16 +240,18 @@ public class ReservationActivity extends AppCompatActivity {
     }
 
     private Reservation createReservation() {
+
         Reservation reservation = new Reservation(
-                jour_start.getText().toString() + "/" + mois_start.getText().toString(),
-                jour_end.getText().toString() + "/" + mois_end.getText().toString(),
-                h_start.getText().toString() + ":" + min_start.getText().toString(),
-                h_end.getText().toString() + ":" + min_end.getText().toString(),
+                date_start.getText().toString(),
+                time_start.getText().toString(),
+                date_end.getText().toString(),
+                time_end.getText().toString(),
                 Integer.parseInt(luggages.getText().toString()),
                 0,
                 10,
                 FirebaseAuth.getInstance().getCurrentUser().getEmail(),
                 shop.getId()
+
         );
 
         return reservation;
@@ -239,5 +305,18 @@ public class ReservationActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == date_start) {
+            fromDatePickerDialog.show();
+        } else if(view == date_end) {
+            toDatePickerDialog.show();
+        } else if(view == time_start) {
+            fromTimePickerDialog.show();
+        } else if(view  == time_end) {
+            toTimePickerDialog.show();
+        }
     }
 }

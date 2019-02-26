@@ -44,7 +44,7 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-       /* db = FirebaseFirestore.getInstance();
+       db = FirebaseFirestore.getInstance();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if( currentUser != null ) {
@@ -54,7 +54,7 @@ public class LoadingActivity extends AppCompatActivity {
         } else {
             Log.i("LOG_USER_NOT_CONNECTED", "Connexion failed");
         }
-        */
+
 
     }
 
