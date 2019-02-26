@@ -1,5 +1,6 @@
 package com.rtersou.dropandfly.activities.user.searching;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.type.Color;
 import com.rtersou.dropandfly.Adapaters.ShopAdapter;
 import com.rtersou.dropandfly.R;
 import com.rtersou.dropandfly.activities.user.reservation.ReservationActivity;
@@ -43,6 +45,7 @@ public class SearchingActivity extends AppCompatActivity implements SearchView.O
                 .build();
         db.setFirestoreSettings(settings);
         initFileds();
+        listView.setBackgroundColor(getResources().getColor(R.color.white));
         getShop();
     }
 

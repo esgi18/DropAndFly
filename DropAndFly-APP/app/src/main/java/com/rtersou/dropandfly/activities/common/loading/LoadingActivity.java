@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -62,6 +63,7 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_loading);
 
         db = FirebaseFirestore.getInstance();
@@ -76,11 +78,12 @@ public class LoadingActivity extends AppCompatActivity {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
+
                         .setIsSmartLockEnabled(false)
                         .setAvailableProviders(providers)
+                        .setLogo(R.mipmap.logo)
                         .build(),
                 RC_SIGN_IN);
-
 
     }
 
