@@ -292,38 +292,43 @@ public class DetailReservationActivity extends AppCompatActivity {
     private void depotReservation(){
         final SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences("shop", MODE_PRIVATE);
 
-        reservation.setStatut(2);
+        if( sharedPreferences.getInt("places",0) < reservation.getNb_luggage()){
+            showError("Place insuffisante");
+        }
+        else {
+            reservation.setStatut(2);
 
-        db.collection("reservations").document(reservation.getId())
-                .update("statut",2)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        showOk("Consigne Déposée");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showError("Erreur dêpot en attente");
-                    }
-                });
+            db.collection("reservations").document(reservation.getId())
+                    .update("statut", 2)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            showOk("Consigne Déposée");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showError("Erreur dêpot en attente");
+                        }
+                    });
 
-        db.collection("shops").document(sharedPreferences.getString("shop_id",""))
-                .update("places",sharedPreferences.getInt("places",0) - reservation.getNb_luggage())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("places", sharedPreferences.getInt("places",0) - reservation.getNb_luggage());
-                        editor.commit();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
+            db.collection("shops").document(sharedPreferences.getString("shop_id", ""))
+                    .update("places", sharedPreferences.getInt("places", 0) - reservation.getNb_luggage())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("places", sharedPreferences.getInt("places", 0) - reservation.getNb_luggage());
+                            editor.commit();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                        }
+                    });
+        }
     }
 
     private void cancelReservation(){
