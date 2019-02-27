@@ -19,7 +19,7 @@ public class Reservation implements Serializable {
 
     public Reservation() {
     }
-
+/*
     public Reservation(String date_start, String date_end, String h_start, String h_end, int nb_luggage, int statut, int price, String user_id, String shop_id) {
         this.date_start = date_start;
         this.date_end = date_end;
@@ -30,7 +30,7 @@ public class Reservation implements Serializable {
         this.price = price;
         this.user_id = user_id;
         this.shop_id = shop_id;
-    }
+    }*/
 
     public Reservation(String id, String date_start, String date_end, String h_start, String h_end, int nb_luggage, int statut, int price, String user_id, String shop_id) {
         this.id = id;

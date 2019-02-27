@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hist_user_line"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/border"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/hist_user_first_line"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/name_shop_res"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Nom"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hist_user_second_line"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/date_start_res"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="date dépot"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_small" />
+
+
+        <TextView
+            android:id="@+id/date_end_res"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="date retrait"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_small" />
+
+        <TextView
+            android:id="@+id/nb_luggage_res"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="nb luggages"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_small" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hist_user_third_line"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/time_start_res"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="heure dépot"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_small" />
+
+
+        <TextView
+            android:id="@+id/time_end_res"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="heure retrait"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_small" />
+
+        <TextView
+            android:id="@+id/hist_user_line_detail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</LinearLayout>

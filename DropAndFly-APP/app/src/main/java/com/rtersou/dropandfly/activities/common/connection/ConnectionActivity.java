@@ -147,12 +147,12 @@ public class ConnectionActivity extends AppCompatActivity {
         ConnectionActivity.this.finish();
 
     }
-
+/*
     private void testBDD(){
         reservationController = new ReservationController(this);
         reservationController.open();
 
-        Reservation reservation = new Reservation("21/01/2019","22/02/2019","10:30","19:45",3,1,18,"1","1");
+        //Reservation reservation = new Reservation("21/01/2019","22/02/2019","10:30","19:45",3,1,18,"1","1");
 
 
         reservationController.createReservation(reservation);
@@ -164,7 +164,7 @@ public class ConnectionActivity extends AppCompatActivity {
 
         reservationController.close();
     }
-
+*/
     private void navHome(FirebaseUser user) {
         Intent NewHomeActivity = new Intent(ConnectionActivity.this, com.rtersou.dropandfly.activities.user.home.HomeActivity.class);
         NewHomeActivity.putExtra(CURRENT_USER, user);

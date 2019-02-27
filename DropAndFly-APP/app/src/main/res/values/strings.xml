@@ -53,13 +53,16 @@
     <string name="title_activity_maps2">Map</string>
 
     <string-array name="user_spinner">
-        <item>En Attente</item>
-        <item>Acceptés</item>
-        <item>En Cours</item>
-        <item>Terminées</item>
-        <item>Réfusées</item>
+        <item>Demandes En Attente</item>
+        <item>Demandes Acceptés</item>
+        <item>Demandes En Cours</item>
+        <item>Demandes Terminées</item>
+        <item>Demandes Réfusées</item>
     </string-array>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+    <string-array name="fragment">
+        <item>ReservationItemFragment</item>
+    </string-array>
 </resources>

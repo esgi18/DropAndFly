@@ -311,7 +311,7 @@ public class ReservationActivity extends AppCompatActivity implements View.OnCli
 
     private Reservation createReservation() {
 
-        Reservation reservation = new Reservation(
+        Reservation reservation = new Reservation(null,
                 date_start.getText().toString(),
                 time_start.getText().toString(),
                 date_end.getText().toString(),
